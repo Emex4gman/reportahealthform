@@ -5,7 +5,7 @@ const httpStatus = require('http-status');
 
 exports.register = async (req, res, next) => {
   try {
-    const { email, password } = req.body.email
+    const { email, password } = req.body
 
     let exsitingUser = await User.findOne({ email })
     if (exsitingUser) {
