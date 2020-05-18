@@ -30,3 +30,10 @@
 
   /* padding-right: 0.1rem; */
 }
+
+@media only screen and (max-width: 600px) {
+  .form-container {
+    width: 100%;
+    /* padding: 20px; */
+  }
+}

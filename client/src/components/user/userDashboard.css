@@ -1,7 +1,7 @@
 .user-dashboard {
   display: flex;
   width: 100%;
-  max-width: 1200;
+  max-width: 1200px;
   justify-content: space-around;
   padding: 2rem;
 }
@@ -23,9 +23,9 @@
 }
 
 .user-image {
-  margin: 30px auto 30px auto;
-  height: 8rem;
-  width: 8rem;
+  margin: 20px auto 20px auto;
+  height: 5rem;
+  width: 5rem;
   border-radius: 100%;
   border: gray solid 2px;
   display: flex;
@@ -37,4 +37,17 @@
 }
 .user-details {
   text-align: center;
+}
+
+@media only screen and (max-width: 600px) {
+  .user-dashboard {
+    display: block;
+  }
+  .user-profile-container {
+    height: fit-content;
+    width: 100%;
+    padding: 0.2rem;
+    margin: auto;
+    margin-bottom: 1rem;
+  }
 }
