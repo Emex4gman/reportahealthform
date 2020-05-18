@@ -1,0 +1,68 @@
+.home {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.auth-form-container {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  min-width: 350px;
+  max-height: 500px;
+  display: flex;
+  flex-direction: column;
+  transform-style: preserve-3d;
+  transition: all 1s ease-in-out;
+}
+.auth-form-container.flip {
+  transform: rotateY(360deg);
+  transform-style: preserve-3d;
+  transition: all 1s ease-in-out;
+}
+.auth-form-container button {
+  margin-top: 1rem;
+  width: 10rem;
+  align-self: center;
+  padding: 0.6rem;
+  background-color: var(--theme-color);
+  border-color: var(--theme-color);
+  margin-bottom: 0.3rem;
+}
+.auth-form-container button:disabled {
+  background-color: gray;
+  border-color: gray;
+}
+.logo {
+  background-image: url(../../common/images/favicon-black.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 6rem;
+}
+.forgotpassword a {
+  margin-bottom: 1rem;
+}
+
+.forgotpassword a,
+.register a {
+  display: inline-block;
+  color: var(--theme-color);
+}
+
+.forgotpassword,
+.register {
+  font-size: 0.7rem;
+  align-items: center;
+  margin: auto;
+}
+.error-messsage p {
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  color: red;
+  font-size: 0.7rem;
+  height: 16px;
+}
+.blur {
+  filter: blur(1.5px);
+}

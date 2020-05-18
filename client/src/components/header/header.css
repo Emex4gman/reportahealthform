@@ -1,0 +1,22 @@
+.header {
+  color: white;
+  margin-bottom: 70px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.brand-image {
+  height: 40px;
+}
+.nav-link {
+  color: white;
+}
+.navlist {
+  margin: 0;
+  list-style: none;
+  padding: 0;
+  display: flex;
+}
+a:hover {
+  color: var(--theme-color);
+}

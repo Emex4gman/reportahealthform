@@ -1,0 +1,19 @@
+@import url("https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&display=swap");
+:root {
+  --theme-color: #00c9db;
+}
+
+body {
+  margin: 0;
+  /* font-family: "Arimo", sans-serif; */
+  font-family: -apple-system, BlinkMacSystemFont, "Arimo", "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}

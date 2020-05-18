@@ -1,0 +1,40 @@
+.user-dashboard {
+  display: flex;
+  width: 100%;
+  max-width: 1200;
+  justify-content: space-around;
+  padding: 2rem;
+}
+.user-profile-container {
+  width: 25%;
+  background-color: white;
+  height: 75%;
+  max-height: 500px;
+  border-radius: 5px;
+}
+.user-table {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 70%;
+  background-color: white;
+  max-height: 600px;
+}
+
+.user-image {
+  margin: 30px auto 30px auto;
+  height: 8rem;
+  width: 8rem;
+  border-radius: 100%;
+  border: gray solid 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  font-size: 3rem;
+  font-weight: bolder;
+}
+.user-details {
+  text-align: center;
+}

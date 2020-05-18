@@ -1,0 +1,24 @@
+@import url("https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  /* height: 100%; */
+  background: linear-gradient(
+      to bottom right,
+      rgba(72, 72, 212, 0),
+      rgba(241, 104, 104, 0)
+    ),
+    url(./common/images/header-background.jpg) center center no-repeat;
+  background-size: cover;
+}
+
+.main {
+  display: flex;
+  min-height: 100vh;
+}
