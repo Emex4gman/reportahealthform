@@ -17,6 +17,11 @@ const app = express();
 // request logging. dev: console | production: file
 app.use(morgan(logs));
 
+//serve client folder
+app.use(express.static(path.join(__dirname.split('src')[0], 'client')));
+app.get('/', function (req, res) {
+  res.sendFile(path.join(__dirname, 'client', 'index.html'));
+});
 //serve public folder
 app.use(express.static(path.join(__dirname.split('src')[0], 'public')));
 
