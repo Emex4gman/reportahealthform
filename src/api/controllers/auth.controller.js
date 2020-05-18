@@ -39,16 +39,16 @@ exports.login = async (req, res, next) => {
     const { email, password } = req.body;
     let foundUser = await User.findOne({ email })
     if (!foundUser) {
-      const error = new Error("Email not found")
-      error.statusCode = 401
+      const error = new Error("Invalid email and password combination")
+      error.statusCode = httpStatus.NOT_FOUND
       throw error
 
     }
 
     const isEqual = await bcrypt.compare(password, foundUser.password)
     if (!isEqual) {
-      const error = new Error('worng password')
-      error.statusCode = 240;
+      const error = new Error('Invalid email and password combination')
+      error.statusCode = httpStatus.UNAUTHORIZED;
       throw error
 
     }
@@ -57,7 +57,11 @@ exports.login = async (req, res, next) => {
       messsage: "login success",
       data: {
         token: token,
-        user: foundUser
+        user: {
+          id: foundUser._id,
+          email: foundUser.email,
+          role: foundUser.role,
+        }
       },
     })
   } catch (error) {

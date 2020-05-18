@@ -7,6 +7,10 @@ const facilitySchema = new Schema({
     type: String,
     required: true
   },
+  fac_type: {
+    type: String,
+    required: true
+  },
   sig_unique_id: {
     type: String,
     required: true
