@@ -26,14 +26,20 @@ class UserDashboard extends React.Component {
 
     setIsLoading(true);
     let apiresponce = await getFacilityHandler(token);
+    console.log(apiresponce);
     if (apiresponce.succed) {
       setFacilityDataHandler(apiresponce.responce.data.foundFacilities);
     } else {
       setFacilityDataHandler([]);
       this.setState({ hasFacililtyRegistered: "fail" });
     }
+    console.log(facilityData);
+    console.log(facilityData.length);
+
     if (facilityData.length > 0) {
       this.setState({ hasFacililtyRegistered: true });
+    } else {
+      this.setState({ hasFacililtyRegistered: false });
     }
     setIsLoading(false);
   }
