@@ -29,6 +29,11 @@ class UserDashboard extends React.Component {
     console.log(apiresponce);
     if (apiresponce.succed) {
       setFacilityDataHandler(apiresponce.responce.data.foundFacilities);
+      if (facilityData.length > 0) {
+        this.setState({ hasFacililtyRegistered: true });
+      } else {
+        this.setState({ hasFacililtyRegistered: false });
+      }
     } else {
       setFacilityDataHandler([]);
       this.setState({ hasFacililtyRegistered: "fail" });
@@ -36,11 +41,6 @@ class UserDashboard extends React.Component {
     console.log(facilityData);
     console.log(facilityData.length);
 
-    if (facilityData.length > 0) {
-      this.setState({ hasFacililtyRegistered: true });
-    } else {
-      this.setState({ hasFacililtyRegistered: false });
-    }
     setIsLoading(false);
   }
   render() {

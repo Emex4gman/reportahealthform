@@ -107,7 +107,7 @@ class Form extends Component {
       this.setState({ lgaOptions: lgaOptions, [key]: e.target.value });
     });
   };
-  submit = async () => {
+  validateForm() {
     var elmnt = document.getElementById("reg-form");
     if (
       this.state.reg_fac_name === "" ||
@@ -118,6 +118,9 @@ class Form extends Component {
       elmnt.scrollIntoView(true);
       return;
     }
+  }
+  submit = async () => {
+    this.validateForm();
     const { token, setIsLoading } = this.context;
     setIsLoading(true);
     modelControl("open");
@@ -132,6 +135,9 @@ class Form extends Component {
         modelMessage: "Facility was registered successfully ",
         succed: data.succed,
       });
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
     } else {
       this.setState({
         modelMessage: data.responce.message,
