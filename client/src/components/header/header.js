@@ -20,6 +20,7 @@ const Header = () => {
       setTokenHandler("");
       setUserDataHandler({});
       setFacilityDataHandler([]);
+      window.location.reload();
     }, 1200);
   };
   return (
