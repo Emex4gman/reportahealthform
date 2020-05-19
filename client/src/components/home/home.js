@@ -51,7 +51,7 @@ const Home = (props) => {
         setTokenHandler(transformed.data.token);
         setUserDataHandler(transformed.data.user);
         setIsLoggedInHandler(true);
-        window.location.reload();
+        // window.location.reload();
       } else {
         setErrorMessage(transformed.message);
       }
