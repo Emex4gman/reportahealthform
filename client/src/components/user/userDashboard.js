@@ -29,7 +29,7 @@ class UserDashboard extends React.Component {
     console.log(apiresponce);
     if (apiresponce.succed) {
       setFacilityDataHandler(apiresponce.responce.data.foundFacilities);
-      if (facilityData.length > 0) {
+      if (apiresponce.responce.data.foundFacilities.length > 0) {
         this.setState({ hasFacililtyRegistered: true });
       } else {
         this.setState({ hasFacililtyRegistered: false });
