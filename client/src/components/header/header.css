@@ -1,6 +1,15 @@
 .header {
   color: white;
   margin-bottom: 70px;
+
+  width: 100%;
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  background-color: #392d9b;
+}
+.header-content {
   max-width: 1200px;
   margin: auto;
 }

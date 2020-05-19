@@ -6,9 +6,14 @@ const AppContextProvider = (props) => {
   let _isloggedIn = window.localStorage.getItem("isloggedIn");
   let _token = window.localStorage.getItem("token");
   let _userData = JSON.parse(window.localStorage.getItem("userData"));
+  let _facilityData = JSON.parse(window.localStorage.getItem("facilityData"));
   if (_userData === null) {
     window.localStorage.setItem("userData", JSON.stringify({}));
     _userData = {};
+  }
+  if (_facilityData === null) {
+    window.localStorage.setItem("facilityData", JSON.stringify([]));
+    _facilityData = [];
   }
   if (_appState === null) {
     window.localStorage.setItem(
@@ -27,6 +32,7 @@ const AppContextProvider = (props) => {
 
   const [appState] = useState(_appState);
   const [userData, setUserData] = useState(_userData);
+  const [facilityData, setFacilityData] = useState(_facilityData);
   const [isloggedIn, setIsLoggedIn] = useState(_isloggedIn);
   const [isLoading, setIsLoading] = useState(false);
   const [token, setToken] = useState(_token);
@@ -45,6 +51,10 @@ const AppContextProvider = (props) => {
     window.localStorage.userData = JSON.stringify(value);
     setUserData(value);
   };
+  const setFacilityDataHandler = (value) => {
+    window.localStorage.facilityData = JSON.stringify(value);
+    setFacilityData(value);
+  };
   const setTokenHandler = (value) => {
     window.localStorage.setItem("token", "Bearer " + value);
     setToken("Bearer " + value);
@@ -54,6 +64,8 @@ const AppContextProvider = (props) => {
       value={{
         userData,
         setUserDataHandler,
+        facilityData,
+        setFacilityDataHandler,
         appState,
         isloggedIn,
         setIsLoggedInHandler,

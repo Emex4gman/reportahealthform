@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import "./form.css";
 import { AppContext } from "../../store/store";
 import { lgas, states } from "../../data/states_lgas";
-import srevices from "../../data/services";
+import services from "../../data/services";
 import Checkbox from "../checkbox/checkbox";
 import { registerFacilityHandler } from "../../services/api.service";
-import Model from "../modeldialog/modeldialog";
+import CustomModel, { modelControl } from "../modeldialog/modeltwo";
 
 class Form extends Component {
   static contextType = AppContext;
@@ -13,7 +13,11 @@ class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      succed: "",
+      phone_number: "",
+      operational_hours: "24h",
       lgaOptions: [],
+      fac_email: "",
       stateOptions: [],
       checkedItems: new Map(),
       country: "nigeria",
@@ -21,7 +25,6 @@ class Form extends Component {
       street_name: "",
       lganame: "",
       statename: "",
-      operational_hours: "",
       latitude: "",
       longitude: "",
       fac_type: "1",
@@ -79,7 +82,7 @@ class Form extends Component {
 
   handleInputChange = (e, key) => {
     this.setState({
-      [key]: e.target.value,
+      [key]: e.target.value.trim(),
     });
   };
 
@@ -105,21 +108,60 @@ class Form extends Component {
     });
   };
   submit = async () => {
+    var elmnt = document.getElementById("reg-form");
+    if (
+      this.state.reg_fac_name === "" ||
+      this.state.street_name === "" ||
+      this.state.lganame === "" ||
+      this.state.statename === ""
+    ) {
+      elmnt.scrollIntoView(true);
+      return;
+    }
     const { token, setIsLoading } = this.context;
     setIsLoading(true);
+    modelControl("open");
+    this.setState({
+      modelMessage: "",
+      succed: "",
+    });
     let data = await registerFacilityHandler(this.state, token);
-    console.log(data);
-    this.setState({ modelMessage: JSON.stringify(data) });
+
+    if (data.succed === true) {
+      this.setState({
+        modelMessage: "Facility was registered successfully ",
+        succed: data.succed,
+      });
+    } else {
+      this.setState({
+        modelMessage: data.responce.message,
+        succed: data.succed,
+      });
+    }
+
     setIsLoading(false);
   };
 
   render() {
+    let switchService;
+    switch (this.state.fac_type) {
+      case "1":
+        switchService = services;
+        break;
+      default:
+        switchService = [];
+        break;
+    }
     return (
-      <div className="form-container ">
-        <Model message={this.state.modelMessage} />
+      <div className="form-container " id="reg-form">
+        <CustomModel
+          message={this.state.modelMessage}
+          succed={this.state.succed}
+        />
         <form
           className="form "
           autoComplete="off"
+          id="reg-form"
           onSubmit={(e) => {
             e.preventDefault();
           }}
@@ -134,8 +176,18 @@ class Form extends Component {
               type="text"
               name="reg_fac_name"
               id="reg_fac_name"
-              placeholder="name"
               onChange={(e) => this.handleInputChange(e, "reg_fac_name")}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="phone_number">Facility phone number</label>
+            <input
+              autoComplete="off"
+              className="form-control"
+              type="number"
+              name="phone_number"
+              id="phone_number"
+              onChange={(e) => this.handleInputChange(e, "phone_number")}
             />
           </div>
 
@@ -177,12 +229,13 @@ class Form extends Component {
             </select>
           </div>
           <div className="form-group">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">Facility email address</label>
             <input
               className="form-control"
               type="email"
               name="email"
               id="email"
+              onChange={(e) => this.handleInputChange(e, "fac_email")}
             />
           </div>
           <div className="form-group">
@@ -230,6 +283,23 @@ class Form extends Component {
               <option value="4">Imaging/Radiological Center</option>
             </select>
           </div>
+          <div className="form-group">
+            <div className="checkbox-container">
+              <span>Type of Services</span>
+              <div className="checkbox-items">
+                {switchService.map((item) => (
+                  <label key={item.key}>
+                    {item.name}{" "}
+                    <Checkbox
+                      name={item.name}
+                      checked={this.state.checkedItems.get(item.name)}
+                      onChange={this.handleChange}
+                    />
+                  </label>
+                ))}
+              </div>
+            </div>
+          </div>
           <div className="form-group ">
             <label htmlFor="ownership">Ownership</label>
             <select
@@ -242,23 +312,6 @@ class Form extends Component {
               <option value="2">Private</option>
               <option value="1">Public</option>
             </select>
-          </div>
-          <div className="form-group">
-            <div className="checkbox-container">
-              <span>Type of Services</span>
-              <div className="checkbox-items">
-                {srevices.map((item) => (
-                  <label key={item.key}>
-                    {item.name}{" "}
-                    <Checkbox
-                      name={item.name}
-                      checked={this.state.checkedItems.get(item.name)}
-                      onChange={this.handleChange}
-                    />
-                  </label>
-                ))}
-              </div>
-            </div>
           </div>
 
           <div className="form-group ">
@@ -273,6 +326,20 @@ class Form extends Component {
               <option value="1">Primary</option>
               <option value="2">Secondary</option>
               <option value="3">Tertiary</option>
+            </select>
+          </div>
+          <div className="form-group ">
+            <label htmlFor="operational_hours">Operational Hours</label>{" "}
+            <select
+              required="required"
+              name="operational_hours"
+              id="operational_hours"
+              className="form-control"
+              onChange={(e) => this.handleSelectChange(e, "operational_hours")}
+            >
+              <option value="24hr">24 hours</option>
+              <option value="6am-6pm">6am - 6pm</option>
+              <option value="only-weekends">Only weekends</option>
             </select>
           </div>
 
@@ -300,8 +367,8 @@ class Form extends Component {
               onClick={this.submit}
               type="submit"
               className="form-control btn btn-success"
-              data-toggle="modal"
-              data-target="#exampleModal"
+              // data-toggle="modal"
+              // data-target="#exampleModal"
             >
               Submit
             </button>

@@ -6,7 +6,7 @@
 //   "Dental",
 // ];
 
-const srevices = [
+const services = [
   {
     name: "Medical",
     key: "Medical",
@@ -34,4 +34,4 @@ const srevices = [
   },
 ];
 
-export default srevices;
+export default services;

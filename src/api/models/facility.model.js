@@ -5,11 +5,17 @@ const Schema = mongoose.Schema;
 const facilitySchema = new Schema({
   reg_fac_name: {
     type: String,
-    required: true
+    required: true,
+    trim: true,
+    lowercase: true,
+
   },
   fac_type: {
     type: String,
     required: true
+    ,
+    trim: true,
+    lowercase: true,
   },
   sig_unique_id: {
     type: String,
@@ -17,15 +23,19 @@ const facilitySchema = new Schema({
   },
   street_name: {
     type: String,
-    required: true
+    required: true,
+    trim: true,
+    lowercase: true,
   },
   phone_number: {
     type: Number,
-    required: true
+
   },
   operational_hours: {
     type: String,
-    required: true
+    required: true,
+    trim: true,
+    lowercase: true,
   },
   latitude: {
     type: String,
@@ -41,7 +51,9 @@ const facilitySchema = new Schema({
   },
   statename: {
     type: String,
-    required: true
+    required: true,
+    trim: true,
+    lowercase: true,
   },
   ownership: {
     type: String,
@@ -55,9 +67,14 @@ const facilitySchema = new Schema({
     type: Array,
     required: true
   },
+  fac_email: {
+    type: String,
+    match: /^\S+@\S+\.\S+$/,
+    trim: true,
+    lowercase: true,
+  },
   cacImage: {
     type: Array,
-    required: true
   },
   average_rating: {
     type: String,

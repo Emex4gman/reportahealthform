@@ -25,8 +25,8 @@
   width: 10rem;
   align-self: center;
   padding: 0.6rem;
-  background-color: var(--theme-color);
-  border-color: var(--theme-color);
+  background-color: var(--border-color);
+  border-color: var(--border-color);
   margin-bottom: 0.3rem;
 }
 .auth-form-container button:disabled {
@@ -46,7 +46,7 @@
 .forgotpassword a,
 .register a {
   display: inline-block;
-  color: var(--theme-color);
+  color: var(--border-color);
 }
 
 .forgotpassword,

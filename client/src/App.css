@@ -6,6 +6,7 @@
 
 html,
 body {
+  scroll-behavior: smooth;
   margin: 0;
   padding: 0;
   /* height: 100%; */
@@ -19,6 +20,7 @@ body {
 }
 
 .main {
+  margin-top: 66px;
   display: flex;
   min-height: 100vh;
 }

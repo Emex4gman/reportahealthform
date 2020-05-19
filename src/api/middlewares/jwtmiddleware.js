@@ -2,8 +2,9 @@ const jwt = require('jsonwebtoken');
 const httpStatus = require("http-status");
 
 const { jwtSecret, jwtExpirationInterval } = require('../../config/env')
-const ADMIN = 'admin';
-const USER = 'user';
+
+exports.ADMIN = 'ADMIN';
+exports.USER = 'USER';
 
 exports.signWithJwt = (payload) => {
   let token = jwt.sign(
@@ -42,17 +43,19 @@ exports.authenticate = (req, res, next) => {
 exports.authorize = (role) => (req, res, next) => {
   const error = new Error('Forbidden')
 
-  if (role === ADMIN) {
+  if (role === this.ADMIN) {
     if (req.role != 'admin') {
       error.statusCode = httpStatus.FORBIDDEN;
       return next(error);
     }
-  }
-  if (role === USER) {
+  } else if (role === this.USER) {
     if (req.role != 'user') {
       error.statusCode = httpStatus.FORBIDDEN;
       return next(error);
     }
+  } else {
+    error.statusCode = httpStatus.FORBIDDEN;
+    return next(error);
   }
   return next();
 }

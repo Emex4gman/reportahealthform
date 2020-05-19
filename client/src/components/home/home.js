@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { AppContext } from "../../store/store";
 import "./home.css";
+import CustomModel, { modelControl } from "../modeldialog/modeltwo";
 const Home = (props) => {
   const {
     setIsLoading,
@@ -11,9 +12,11 @@ const Home = (props) => {
     setIsLoggedInHandler,
   } = useContext(AppContext);
   const [flipclass, setflipclass] = useState(false);
-  const [email, setEmail] = useState("emex4gman@gmail.com");
-  const [password, setPassword] = useState("1234567890");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [modelMessage, setModelMessage] = useState("");
+  const [modelSucced, setModelSucced] = useState("");
   const validateform = () => {
     if (email === "" || password === "") {
       throw new Error("Some fields are empty");
@@ -34,6 +37,7 @@ const Home = (props) => {
       validateform();
       let responce = await fetch(
         "https://reportahealthform.herokuapp.com/v1/auth/login",
+        // "https://7b8a8483.ngrok.io/v1/auth/login",
         {
           method: "POST",
           body: JSON.stringify({ email, password }),
@@ -57,8 +61,11 @@ const Home = (props) => {
   };
 
   const register = async (email, password) => {
+    setIsLoading(true);
+
     try {
       validateform();
+      modelControl("open");
       let responce = await fetch(
         "https://reportahealthform.herokuapp.com/v1/auth/register",
         {
@@ -71,14 +78,25 @@ const Home = (props) => {
       );
       let transformed = await responce.json();
       if (responce.status > 300) {
-        setErrorMessage(transformed.message);
+        setModelMessage(transformed.message);
+        setModelSucced(false);
+        // setErrorMessage(transformed.message);
+      }
+      if (responce.status === 201) {
+        setModelSucced(true);
+        setModelMessage("Account created, please login");
       }
     } catch (error) {
+      setModelSucced(false);
+      setModelMessage(error.message);
       setErrorMessage(error.message);
     }
+    setIsLoading(false);
   };
+
   return (
     <div className="home">
+      <CustomModel message={modelMessage} succed={modelSucced} />
       <div
         className={`auth-form-container ${flipclass ? "flip" : ""} ${
           isLoading ? "blur" : ""
@@ -88,7 +106,7 @@ const Home = (props) => {
         <div className="form-group">
           <label htmlFor="name">Email</label>
           <input
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value.trim())}
             autoComplete="off"
             className="form-control"
             type="email"
@@ -101,7 +119,7 @@ const Home = (props) => {
         <div className="form-group">
           <label htmlFor="name">Password</label>
           <input
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value.trim())}
             autoComplete="off"
             className="form-control"
             type="password"
