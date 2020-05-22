@@ -67,6 +67,13 @@ const facilitySchema = new Schema({
     type: Array,
     required: true
   },
+  daysOfOperations: {
+    type: Array,
+
+  },
+  specilizations: {
+    type: Array,
+  },
   fac_email: {
     type: String,
     match: /^\S+@\S+\.\S+$/,

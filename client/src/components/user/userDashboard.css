@@ -4,6 +4,7 @@
   max-width: 1200px;
   justify-content: space-around;
   padding: 2rem;
+  margin: 0 auto;
 }
 .user-profile-container {
   width: 25%;

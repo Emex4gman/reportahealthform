@@ -45,9 +45,7 @@ class UserDashboard extends React.Component {
   }
   render() {
     const { userData, facilityData } = this.context;
-
     let component;
-
     switch (this.state.hasFacililtyRegistered) {
       case true:
         component = (
@@ -58,9 +56,6 @@ class UserDashboard extends React.Component {
           </div>
         );
         break;
-      // case false:
-      //   component = <Form />;
-      //   break;
       case "fail":
         component = (
           <div className="loading-data-container">

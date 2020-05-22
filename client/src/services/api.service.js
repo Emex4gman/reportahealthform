@@ -3,8 +3,8 @@ export const registerFacilityHandler = async (body, token) => {
   let succed = false;
   try {
     let apiresponce = await fetch(
-      "https://reportahealthform.herokuapp.com/v1/facility",
-      // " https://7b8a8483.ngrok.io/v1/facility",
+      // "https://reportahealthform.herokuapp.com/v1/facility",
+      " http://localhost:7000/v1/facility",
       {
         method: "POST",
         body: JSON.stringify(body),
@@ -30,8 +30,8 @@ export const getFacilityHandler = async (token) => {
   let succed = false;
   try {
     let apiresponce = await fetch(
-      "https://reportahealthform.herokuapp.com/v1/facility/user",
-      // " https://7b8a8483.ngrok.io/v1/facility/user",
+      // "https://reportahealthform.herokuapp.com/v1/facility/user",
+      " http://localhost:7000/v1/facility/user",
       {
         method: "GET",
         headers: {

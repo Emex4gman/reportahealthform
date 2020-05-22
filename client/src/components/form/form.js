@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import "./form.css";
 import { AppContext } from "../../store/store";
 import { lgas, states } from "../../data/states_lgas";
-import services from "../../data/services";
+import services, {
+  coreRadiologicalServices,
+  coreHospitalServices,
+} from "../../data/services";
+import { daysOfOperations } from "../../data/options";
 import Checkbox from "../checkbox/checkbox";
 import { registerFacilityHandler } from "../../services/api.service";
 import CustomModel, { modelControl } from "../modeldialog/modeltwo";
@@ -31,15 +35,20 @@ class Form extends Component {
       ownership: "private",
       facility_level: "primary",
       services: [],
+      specilizations: [],
+      daysOfOperations: [],
       modelMessage: "",
+      specilizationsList: [],
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleLoaction = this.handleLoaction.bind(this);
   }
-  handleChange(e) {
-    let servicesList = [...this.state.services];
+  handleChange(e, key) {
+    let servicesList = [...this.state[`${key}`]];
     const item = e.target.name;
     const isChecked = e.target.checked;
+    var ada = new Map();
+    ada.get(key);
     if (isChecked) {
       servicesList.push(item);
     } else {
@@ -47,7 +56,7 @@ class Form extends Component {
     }
     this.setState((prevState) => ({
       checkedItems: prevState.checkedItems.set(item, isChecked),
-      services: servicesList,
+      [key]: servicesList,
     }));
   }
 
@@ -69,6 +78,21 @@ class Form extends Component {
     this.setState({ stateOptions: stateOptions });
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.fac_type !== this.state.fac_type) {
+      this.setState({
+        services: [],
+        specilizations: [],
+        specilizationsList: [],
+      });
+    }
+    if (prevState.services.length !== this.state.services.length) {
+      console.log(123);
+      this.handleSpecilizationsChange(prevState);
+    }
+    // console.log(prevState.services.length, this.state.services.length);
+  }
+
   handleLoaction = async () => {
     await navigator.geolocation.getCurrentPosition(
       (position) =>
@@ -76,7 +100,11 @@ class Form extends Component {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
         }),
-      (err) => console.log(err)
+      (err) =>
+        this.setState({
+          latitude: 0,
+          longitude: 0,
+        })
     );
   };
 
@@ -148,11 +176,78 @@ class Form extends Component {
     setIsLoading(false);
   };
 
+  handleSpecilizationsChange(prevState) {
+    // get the state of the  previous list and update the
+    //list depening on the content in the services state
+    let serviceList = [...this.state.services];
+    console.log(serviceList);
+    let newList = [];
+    if (serviceList.includes("Medical")) {
+      newList.push(...coreHospitalServices.Medical);
+    } else {
+      for (
+        let index = 0;
+        index < coreHospitalServices.Medical.length;
+        index++
+      ) {
+        newList.pop(coreHospitalServices.Medical[index]);
+      }
+    }
+    if (serviceList.includes("Dental")) {
+      newList.push(...coreHospitalServices.Dental);
+    } else {
+      for (let index = 0; index < coreHospitalServices.Dental.length; index++) {
+        newList.pop(coreHospitalServices.Dental[index]);
+      }
+    }
+    if (serviceList.includes("Pediatrics")) {
+      newList.push(...coreHospitalServices.Pediatrics);
+    } else {
+      for (
+        let index = 0;
+        index < coreHospitalServices.Pediatrics.length;
+        index++
+      ) {
+        newList.pop(coreHospitalServices.Pediatrics[index]);
+      }
+    }
+
+    if (serviceList.includes("Surgical")) {
+      newList.push(...coreHospitalServices.Surgical);
+    } else {
+      for (
+        let index = 0;
+        index < coreHospitalServices.Surgical.length;
+        index++
+      ) {
+        newList.pop(coreHospitalServices.Surgical[index]);
+      }
+    }
+
+    if (serviceList.includes("Obstetrics and Gynecology")) {
+      newList.push(...coreHospitalServices.ObstetricsGynecology);
+    } else {
+      for (
+        let index = 0;
+        index < coreHospitalServices.ObstetricsGynecology.length;
+        index++
+      ) {
+        newList.pop(coreHospitalServices.ObstetricsGynecology[index]);
+      }
+    }
+
+    this.setState({
+      specilizationsList: newList,
+    });
+  }
   render() {
     let switchService;
     switch (this.state.fac_type) {
       case "1":
         switchService = services;
+        break;
+      case "4":
+        switchService = coreRadiologicalServices;
         break;
       default:
         switchService = [];
@@ -274,38 +369,7 @@ class Form extends Component {
               onChange={(e) => this.handleInputChange(e, "facility_website")}
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="fac_type">Facility Type</label>
-            <select
-              required="required"
-              className="form-control"
-              name="fac_type"
-              id="fac_type"
-              onChange={(e) => this.handleSelectChange(e, "fac_type")}
-            >
-              <option value="1">Hospitals</option>
-              <option value="2">Pharmacy</option>
-              <option value="3">Laboratory</option>
-              <option value="4">Imaging/Radiological Center</option>
-            </select>
-          </div>
-          <div className="form-group">
-            <div className="checkbox-container">
-              <span>Type of Services</span>
-              <div className="checkbox-items">
-                {switchService.map((item) => (
-                  <label key={item.key}>
-                    {item.name}{" "}
-                    <Checkbox
-                      name={item.name}
-                      checked={this.state.checkedItems.get(item.name)}
-                      onChange={this.handleChange}
-                    />
-                  </label>
-                ))}
-              </div>
-            </div>
-          </div>
+
           <div className="form-group ">
             <label htmlFor="ownership">Ownership</label>
             <select
@@ -348,7 +412,72 @@ class Form extends Component {
               <option value="only-weekends">Only weekends</option>
             </select>
           </div>
-
+          <div className="form-group">
+            <div className="checkbox-container">
+              <span>Days of operations</span>
+              <div className="checkbox-items">
+                {daysOfOperations.map((item) => (
+                  <label key={item.key}>
+                    {item.name}{" "}
+                    <Checkbox
+                      name={item.name}
+                      checked={this.state.checkedItems.get(item.name)}
+                      onChange={(e) => this.handleChange(e, "daysOfOperations")}
+                    />
+                  </label>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="form-group">
+            <label htmlFor="fac_type">Facility Type</label>
+            <select
+              required="required"
+              className="form-control"
+              name="fac_type"
+              id="fac_type"
+              onChange={(e) => this.handleSelectChange(e, "fac_type")}
+            >
+              <option value="1">Hospitals</option>
+              <option value="2">Pharmacy</option>
+              <option value="3">Laboratory</option>
+              <option value="4">Imaging/Radiological Center</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <div className="checkbox-container">
+              <span>Type of Services</span>
+              <div className="checkbox-items">
+                {switchService.map((item) => (
+                  <label key={item.key}>
+                    {item.name}{" "}
+                    <Checkbox
+                      name={item.name}
+                      checked={this.state.checkedItems.get(item.name)}
+                      onChange={(e) => this.handleChange(e, "services")}
+                    />
+                  </label>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="form-group">
+            <div className="checkbox-container">
+              <span>Specilizations</span>
+              <div className="checkbox-items">
+                {this.state.specilizationsList.map((item) => (
+                  <label key={item.key}>
+                    {item.name}{" "}
+                    <Checkbox
+                      name={item.name}
+                      checked={this.state.checkedItems.get(item.name)}
+                      onChange={(e) => this.handleChange(e, "specilizations")}
+                    />
+                  </label>
+                ))}
+              </div>
+            </div>
+          </div>
           <div className="form-group">
             <label htmlFor="profile">
               Provide an Image of the facility show a sign post with the
@@ -373,8 +502,6 @@ class Form extends Component {
               onClick={this.submit}
               type="submit"
               className="form-control btn btn-success"
-              // data-toggle="modal"
-              // data-target="#exampleModal"
             >
               Submit
             </button>

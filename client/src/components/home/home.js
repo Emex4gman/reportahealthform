@@ -36,8 +36,8 @@ const Home = (props) => {
     try {
       validateform();
       let responce = await fetch(
-        "https://reportahealthform.herokuapp.com/v1/auth/login",
-        // "https://7b8a8483.ngrok.io/v1/auth/login",
+        // "https://reportahealthform.herokuapp.com/v1/auth/login",
+        "http://localhost:7000/v1/auth/login",
         {
           method: "POST",
           body: JSON.stringify({ email, password }),
