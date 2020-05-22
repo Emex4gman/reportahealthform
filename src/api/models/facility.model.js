@@ -12,8 +12,7 @@ const facilitySchema = new Schema({
   },
   fac_type: {
     type: String,
-    required: true
-    ,
+    required: true,
     trim: true,
     lowercase: true,
   },
@@ -29,13 +28,24 @@ const facilitySchema = new Schema({
   },
   phone_number: {
     type: Number,
-
   },
   operational_hours: {
     type: String,
     required: true,
     trim: true,
     lowercase: true,
+  },
+  licenseStatus: {
+    type: String,
+  },
+  operationalStatus: {
+    type: String,
+  },
+  registrationStatus: {
+    type: String,
+  },
+  premises: {
+    type: String,
   },
   latitude: {
     type: String,

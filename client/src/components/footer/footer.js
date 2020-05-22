@@ -23,7 +23,13 @@ const Footer = () => {
         </div>
         <div className="footer-item">
           <h4 className="footer-item-header">Social Media</h4>
-          <p>F, T, G, I, Ln</p>
+          <div className="footer-icons">
+            <i className="fa fa-facebook-official" aria-hidden="true"></i>
+            <i className="fa fa-twitter" aria-hidden="true"></i>
+            <i className="fa fa-google-plus-square" aria-hidden="true"></i>
+            <i className="fa fa-instagram" aria-hidden="true"></i>
+            <i className="fa fa-linkedin-square" aria-hidden="true"></i>
+          </div>
         </div>
       </div>
       <p className="copyright">

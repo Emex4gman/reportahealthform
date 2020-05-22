@@ -102,68 +102,68 @@ const Medical = [
 const Surgical = [
   {
     name: "Ophthalmology",
-    key: "Ophthalmology",
+    key: "surgical1",
     label: "Ophthalmology",
   },
   {
     name: "General Surgery",
-    key: "General Surgery",
+    key: " surgical2",
     label: "General Surgery",
   },
   {
     name: "Cardiothoracic Surgery",
-    key: "Cardiothoracic Surgery",
+    key: " surgical3",
     label: "Cardiothoracic Surgery",
   },
   {
     name: "Neuro-Surgery",
-    key: "Neuro-Surgery",
+    key: "surgical4",
     label: "Neuro-Surgery",
   },
   {
     name: "Orthopedic Surgery",
-    key: "Orthopedic Surgery",
+    key: "surgical5",
     label: "Orthopedic Surgery",
   },
   {
     name: "Urology",
-    key: "Urology",
+    key: "surgical6",
     label: "Urology",
   },
   {
     name: "Otorhinolaryngology(ENT)",
-    key: "Otorhinolaryngology(ENT)",
+    key: "surgical7",
     label: "Otorhinolaryngology(ENT)",
   },
   {
     name: "Anesthesia",
-    key: "Anesthesia",
+    key: "surgical8",
     label: "Anesthesia",
   },
   {
     name: "Oncology / Radiotherapy",
-    key: "Oncology / Radiotherapy",
+    key: "surgical9",
     label: "Oncology / Radiotherapy",
   },
   {
     name: "Vascular Surgery",
-    key: "Vascular Surgery",
+    key: " surgical10",
     label: "Vascular Surgery",
   },
   {
     name: "Pediatric Surgery",
-    key: "Pediatric Surgery",
+    key: "surgical11",
     label: "Pediatric Surgery",
   },
   {
     name: "Plastic Surgery",
-    key: "Plastic Surgery",
+    key: "surgical12",
     label: "Plastic Surgery",
   },
 
   {
     name: "Pathology",
-    key: "Pathology",
+    key: "surgical13",
     label: "Pathology",
   },
 ];
@@ -214,13 +214,13 @@ const ObstetricsGynecology = [
   },
 ];
 
-export const coreHospitalServices = {
-  Medical,
-  Surgical,
-  Pediatrics,
-  Dental,
-  ObstetricsGynecology,
-};
+export const coreHospitalServices = [
+  { name: "Medical", options: Medical },
+  { name: "Surgical", options: Surgical },
+  { name: "Pediatrics", options: Pediatrics },
+  { name: "Dental", options: Dental },
+  { name: "Obstetrics and Gynecology", options: ObstetricsGynecology },
+];
 
 export const coreLabServices = {};
 

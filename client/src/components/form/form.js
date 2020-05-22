@@ -6,11 +6,17 @@ import services, {
   coreRadiologicalServices,
   coreHospitalServices,
 } from "../../data/services";
-import { daysOfOperations } from "../../data/options";
+import {
+  daysOfOperations,
+  licenseStatus,
+  operationalStatus,
+  registrationStatus,
+  premises,
+} from "../../data/options";
 import Checkbox from "../checkbox/checkbox";
 import { registerFacilityHandler } from "../../services/api.service";
 import CustomModel, { modelControl } from "../modeldialog/modeltwo";
-
+import RadioButtonInput from "../radioButtonInput/radioButtoninput";
 class Form extends Component {
   static contextType = AppContext;
 
@@ -18,8 +24,12 @@ class Form extends Component {
     super(props);
     this.state = {
       succed: "",
+      licenseStatus: "Unknown",
+      registrationStatus: "Unknown",
+      premises: "",
       phone_number: "",
       operational_hours: "24h",
+      operationalStatus: "",
       lgaOptions: [],
       fac_email: "",
       stateOptions: [],
@@ -47,8 +57,6 @@ class Form extends Component {
     let servicesList = [...this.state[`${key}`]];
     const item = e.target.name;
     const isChecked = e.target.checked;
-    var ada = new Map();
-    ada.get(key);
     if (isChecked) {
       servicesList.push(item);
     } else {
@@ -79,18 +87,22 @@ class Form extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    console.log("this.state.specilizations", this.state.specilizations);
+    if (prevState.services.length !== this.state.services.length) {
+      this.handleSpecilizationsChange(prevState);
+    }
     if (prevState.fac_type !== this.state.fac_type) {
       this.setState({
         services: [],
         specilizations: [],
         specilizationsList: [],
+        checkedItems: new Map(),
       });
     }
-    if (prevState.services.length !== this.state.services.length) {
-      console.log(123);
-      this.handleSpecilizationsChange(prevState);
-    }
-    // console.log(prevState.services.length, this.state.services.length);
+  }
+
+  handleRadioChange(e, key) {
+    this.setState({ [key]: e.target.value });
   }
 
   handleLoaction = async () => {
@@ -176,64 +188,56 @@ class Form extends Component {
     setIsLoading(false);
   };
 
-  handleSpecilizationsChange(prevState) {
+  async handleSpecilizationsChange(prevState) {
     // get the state of the  previous list and update the
     //list depening on the content in the services state
     let serviceList = [...this.state.services];
-    console.log(serviceList);
     let newList = [];
     if (serviceList.includes("Medical")) {
-      newList.push(...coreHospitalServices.Medical);
-    } else {
-      for (
-        let index = 0;
-        index < coreHospitalServices.Medical.length;
-        index++
-      ) {
-        newList.pop(coreHospitalServices.Medical[index]);
-      }
+      //add medical Services
+      coreHospitalServices.filter((item) => {
+        if (item.name === "Medical") {
+          newList.push(...item.options);
+        }
+        return true;
+      });
     }
     if (serviceList.includes("Dental")) {
-      newList.push(...coreHospitalServices.Dental);
-    } else {
-      for (let index = 0; index < coreHospitalServices.Dental.length; index++) {
-        newList.pop(coreHospitalServices.Dental[index]);
-      }
+      //add Dental Services
+      coreHospitalServices.filter((item) => {
+        if (item.name === "Dental") {
+          newList.push(...item.options);
+        }
+        return true;
+      });
     }
+
     if (serviceList.includes("Pediatrics")) {
-      newList.push(...coreHospitalServices.Pediatrics);
-    } else {
-      for (
-        let index = 0;
-        index < coreHospitalServices.Pediatrics.length;
-        index++
-      ) {
-        newList.pop(coreHospitalServices.Pediatrics[index]);
-      }
+      //add Pediatrics Services
+      coreHospitalServices.filter((item) => {
+        if (item.name === "Pediatrics") {
+          newList.push(...item.options);
+        }
+        return true;
+      });
     }
-
     if (serviceList.includes("Surgical")) {
-      newList.push(...coreHospitalServices.Surgical);
-    } else {
-      for (
-        let index = 0;
-        index < coreHospitalServices.Surgical.length;
-        index++
-      ) {
-        newList.pop(coreHospitalServices.Surgical[index]);
-      }
+      //add Surgical Services
+      coreHospitalServices.filter((item) => {
+        if (item.name === "Surgical") {
+          newList.push(...item.options);
+        }
+        return true;
+      });
     }
-
     if (serviceList.includes("Obstetrics and Gynecology")) {
-      newList.push(...coreHospitalServices.ObstetricsGynecology);
-    } else {
-      for (
-        let index = 0;
-        index < coreHospitalServices.ObstetricsGynecology.length;
-        index++
-      ) {
-        newList.pop(coreHospitalServices.ObstetricsGynecology[index]);
-      }
+      //add Obstetrics and Gynecology Services
+      coreHospitalServices.filter((item) => {
+        if (item.name === "Obstetrics and Gynecology") {
+          newList.push(...item.options);
+        }
+        return true;
+      });
     }
 
     this.setState({
@@ -411,6 +415,80 @@ class Form extends Component {
               <option value="6am-6pm">6am - 6pm</option>
               <option value="only-weekends">Only weekends</option>
             </select>
+          </div>
+          <div className="form-group ">
+            <div className="radio-container">
+              <label>Operational Status</label>
+              <div className="radio-items">
+                {operationalStatus.map((item) => (
+                  <label key={item.name}>
+                    {item.name}
+                    <RadioButtonInput
+                      value={item.name}
+                      name="operationalStatus"
+                      onChange={(e) =>
+                        this.handleRadioChange(e, "operationalStatus")
+                      }
+                    />
+                  </label>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="form-group ">
+            <div className="radio-container">
+              <label>license Status</label>
+              <div className="radio-items">
+                {licenseStatus.map((item) => (
+                  <label key={item.name}>
+                    {item.name}
+                    <RadioButtonInput
+                      value={item.name}
+                      name="licenseStatus"
+                      onChange={(e) =>
+                        this.handleRadioChange(e, "licenseStatus")
+                      }
+                    />
+                  </label>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="form-group ">
+            <div className="radio-container">
+              <label>Registration Status</label>
+              <div className="radio-items">
+                {registrationStatus.map((item) => (
+                  <label key={item.name}>
+                    {item.name}
+                    <RadioButtonInput
+                      value={item.name}
+                      name="registrationStatus"
+                      onChange={(e) =>
+                        this.handleRadioChange(e, "registrationStatus")
+                      }
+                    />
+                  </label>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="form-group ">
+            <div className="radio-container">
+              <label>Premises Status</label>
+              <div className="radio-items">
+                {premises.map((item) => (
+                  <label key={item.name}>
+                    {item.name}
+                    <RadioButtonInput
+                      value={item.name}
+                      name="premises"
+                      onChange={(e) => this.handleRadioChange(e, "premises")}
+                    />
+                  </label>
+                ))}
+              </div>
+            </div>
           </div>
           <div className="form-group">
             <div className="checkbox-container">

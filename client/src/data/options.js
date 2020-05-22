@@ -1,4 +1,3 @@
-// export default Options = {};
 //checkbox
 export const daysOfOperations = [
   { name: "Monday", key: "Monday", label: "Monday" },
@@ -38,5 +37,5 @@ export const licenseStatus = [
 //radio
 export const premises = [
   { name: "Institution", key: "Institution" },
-  { name: "Not Licensed", key: "Not Licensed" },
+  { name: "Standalone", key: "Standalone" },
 ];
