@@ -1,6 +1,7 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import "./header.css";
 import { AppContext } from "../../store/store";
+import moment from "moment";
 
 const Header = () => {
   const {
@@ -10,19 +11,30 @@ const Header = () => {
     setUserDataHandler,
     setTokenHandler,
     setFacilityDataHandler,
+    expireIn,
+    setExpireInHandler,
   } = useContext(AppContext);
-  const logout = (e) => {
+  useEffect(() => {
+    if (expireIn !== "end") {
+      let tokenHasExpired = moment().isAfter(expireIn);
+      if (tokenHasExpired) {
+        logout();
+      }
+    }
+  });
+  const logout = () => {
     setIsLoading(true);
-    e.preventDefault();
     setTimeout(() => {
       setIsLoggedInHandler(false);
       setIsLoading(false);
       setTokenHandler("");
       setUserDataHandler({});
       setFacilityDataHandler([]);
+      setExpireInHandler("end");
       window.location.reload();
     }, 1200);
   };
+
   return (
     <div className="header">
       <div className="header-content">
@@ -44,7 +56,8 @@ const Header = () => {
               <li className="nav-item">
                 <a
                   onClick={(e) => {
-                    logout(e);
+                    e.preventDefault();
+                    logout();
                   }}
                   href="/"
                   className="nav-link"

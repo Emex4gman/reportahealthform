@@ -1,6 +1,6 @@
 .facility-item {
   border: 2px solid var(--border-color);
-  border-radius: 0.5rem;
+  border-radius: 0.2rem;
   margin: 1rem 0;
   display: flex;
   justify-content: space-between;
@@ -8,7 +8,9 @@
   padding: 5px;
   cursor: pointer;
 }
-
+.facility-item > span {
+  width: 100%;
+}
 .facility-item .action-button > button {
   font-size: 0.6rem;
   margin: 5px;

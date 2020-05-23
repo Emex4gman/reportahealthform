@@ -39,3 +39,37 @@ export const premises = [
   { name: "Institution", key: "Institution" },
   { name: "Standalone", key: "Standalone" },
 ];
+
+// select
+export const fac_types = [
+  {
+    id: "1",
+    fac_type: "Hospital",
+  },
+  {
+    id: "2",
+
+    fac_type: "Pharmacy",
+  },
+  {
+    id: "3",
+
+    fac_type: "Laboratory",
+  },
+  {
+    id: "1",
+    fac_type: "Imaging/ Radiological Center",
+  },
+];
+
+//select
+export const ownershipList = [
+  {
+    id: "1",
+    value: "Public",
+  },
+  {
+    id: "2",
+    value: "Private",
+  },
+];

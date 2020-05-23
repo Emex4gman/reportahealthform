@@ -7,7 +7,7 @@ const Home = (props) => {
     setIsLoading,
     isLoading,
     setTokenHandler,
-
+    setExpireInHandler,
     setUserDataHandler,
     setIsLoggedInHandler,
   } = useContext(AppContext);
@@ -48,6 +48,7 @@ const Home = (props) => {
       );
       let transformed = await responce.json();
       if (responce.status === 202) {
+        setExpireInHandler();
         setTokenHandler(transformed.data.token);
         setUserDataHandler(transformed.data.user);
         setIsLoggedInHandler(true);

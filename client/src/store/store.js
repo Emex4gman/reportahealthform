@@ -1,10 +1,12 @@
 import React, { createContext, useState } from "react";
-export const AppContext = createContext();
+import moment from "moment";
 
+export const AppContext = createContext();
 const AppContextProvider = (props) => {
   let _appState = JSON.parse(window.localStorage.getItem("appstate"));
   let _isloggedIn = window.localStorage.getItem("isloggedIn");
   let _token = window.localStorage.getItem("token");
+  let _expireIn = window.localStorage.getItem("expireIn");
   let _userData = JSON.parse(window.localStorage.getItem("userData"));
   let _facilityData = JSON.parse(window.localStorage.getItem("facilityData"));
   if (_userData === null) {
@@ -36,7 +38,13 @@ const AppContextProvider = (props) => {
   const [isloggedIn, setIsLoggedIn] = useState(_isloggedIn);
   const [isLoading, setIsLoading] = useState(false);
   const [token, setToken] = useState(_token);
+  const [expireIn, setExpireIn] = useState(_expireIn);
 
+  const setExpireInHandler = (value) => {
+    let _expireIn = value || moment().add(1, "day").format();
+    window.localStorage.expireIn = _expireIn;
+    setExpireIn(_expireIn);
+  };
   const setIsLoggedInHandler = (value) => {
     window.localStorage.setItem(
       "appstate",
@@ -71,6 +79,8 @@ const AppContextProvider = (props) => {
         setIsLoggedInHandler,
         token,
         setTokenHandler,
+        expireIn,
+        setExpireInHandler,
         isLoading,
         setIsLoading,
       }}

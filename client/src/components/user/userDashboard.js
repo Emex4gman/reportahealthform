@@ -4,12 +4,15 @@ import Form from "../form/form";
 import { AppContext } from "../../store/store";
 import { getFacilityHandler } from "../../services/api.service";
 import FacilityTile from "../mics/facilityTile";
+import FacilityPreview from "../mics/facilityPreview";
 class UserDashboard extends React.Component {
   static contextType = AppContext;
   constructor(props) {
     super(props);
     this.state = {
       hasFacililtyRegistered: null,
+      isOpen: false,
+      facData: {},
     };
   }
   componentDidMount() {
@@ -39,6 +42,12 @@ class UserDashboard extends React.Component {
     }
     setIsLoading(false);
   }
+  selectFacDataHandler(fac) {
+    this.setState({ facData: fac });
+  }
+  togglePreviewHandler() {
+    this.setState({ isOpen: !this.state.isOpen });
+  }
   render() {
     const { userData, facilityData } = this.context;
     let component;
@@ -47,7 +56,14 @@ class UserDashboard extends React.Component {
         component = (
           <div className="facility-items">
             {facilityData.map((fac) => (
-              <FacilityTile facData={fac} key={fac._id} />
+              <FacilityTile
+                facData={fac}
+                key={fac._id}
+                onClick={() => {
+                  this.selectFacDataHandler(fac);
+                  this.togglePreviewHandler();
+                }}
+              />
             ))}
           </div>
         );
@@ -93,10 +109,20 @@ class UserDashboard extends React.Component {
         {this.state.hasFacililtyRegistered === false ? (
           <Form />
         ) : (
-          <div className="user-table">{component}</div>
-        )}
+          <div className="user-table">
+            {component}
 
-        {/*  */}
+            <div
+              className={`preview-container ${this.state.isOpen ? "open" : ""}`}
+            >
+              {this.state.isOpen ? (
+                <FacilityPreview facData={this.state.facData} />
+              ) : (
+                <div className="no-preview-item"></div>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     );
   }

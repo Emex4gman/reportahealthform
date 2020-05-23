@@ -87,7 +87,6 @@ class Form extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log("this.state.specilizations", this.state.specilizations);
     if (prevState.services.length !== this.state.services.length) {
       this.handleSpecilizationsChange(prevState);
     }
@@ -354,16 +353,6 @@ class Form extends Component {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="postal_address">Postal Address</label>
-            <input
-              className="form-control"
-              type="text"
-              name="postal_address"
-              id="postal_address"
-              onChange={(e) => this.handleInputChange(e, "postal_address")}
-            />
-          </div>
-          <div className="form-group">
             <label htmlFor="facility_website">Facility Website</label>
             <input
               className="form-control"
@@ -383,8 +372,8 @@ class Form extends Component {
               className="form-control"
               onChange={(e) => this.handleSelectChange(e, "ownership")}
             >
-              <option value="2">Private</option>
               <option value="1">Public</option>
+              <option value="2">Private</option>
             </select>
           </div>
 
@@ -516,7 +505,7 @@ class Form extends Component {
               id="fac_type"
               onChange={(e) => this.handleSelectChange(e, "fac_type")}
             >
-              <option value="1">Hospitals</option>
+              <option value="1">Hospital</option>
               <option value="2">Pharmacy</option>
               <option value="3">Laboratory</option>
               <option value="4">Imaging/Radiological Center</option>

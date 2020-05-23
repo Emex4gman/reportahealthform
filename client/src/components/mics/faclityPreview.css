@@ -1,0 +1,18 @@
+.preview-items {
+  display: flex;
+  flex-direction: column;
+}
+
+.preview-item {
+  padding: 0.3rem;
+}
+.preview-item > span:nth-child(1) {
+  font-weight: bold;
+}
+
+.preview-item:nth-child(2n + 0) {
+  background-color: #c0c0c0;
+}
+.preview-item:nth-child(2n + 1) {
+  background-color: #dddddd;
+}
