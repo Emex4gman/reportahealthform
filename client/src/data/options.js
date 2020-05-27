@@ -65,11 +65,11 @@ export const fac_types = [
 //select
 export const ownershipList = [
   {
-    id: "Private",
+    id: "1",
     value: "Public",
   },
   {
-    id: "Private",
+    id: "2",
     value: "Private",
   },
 ];
