@@ -32,6 +32,11 @@ const AppContextProvider = (props) => {
     _token = "Bearer ";
   }
 
+  /**
+*  using useState hook for state managemant 
+
+*/
+
   const [appState] = useState(_appState);
   const [userData, setUserData] = useState(_userData);
   const [facilityData, setFacilityData] = useState(_facilityData);
@@ -40,11 +45,18 @@ const AppContextProvider = (props) => {
   const [token, setToken] = useState(_token);
   const [expireIn, setExpireIn] = useState(_expireIn);
 
+  /**
+   *  handle token expiration generator for [1 day]
+   */
   const setExpireInHandler = (value) => {
     let _expireIn = value || moment().add(1, "day").format();
     window.localStorage.expireIn = _expireIn;
     setExpireIn(_expireIn);
   };
+
+  /**
+   *  handle login status
+   */
   const setIsLoggedInHandler = (value) => {
     window.localStorage.setItem(
       "appstate",
@@ -55,14 +67,25 @@ const AppContextProvider = (props) => {
     );
     setIsLoggedIn(value);
   };
+  /**
+   *  handle users data
+   */
   const setUserDataHandler = (value) => {
     window.localStorage.userData = JSON.stringify(value);
     setUserData(value);
   };
+
+  /**
+   *  handle  and set facility data
+   */
   const setFacilityDataHandler = (value) => {
     window.localStorage.facilityData = JSON.stringify(value);
     setFacilityData(value);
   };
+
+  /**
+   *  handle and save token to local storage
+   */
   const setTokenHandler = (value) => {
     window.localStorage.setItem("token", "Bearer " + value);
     setToken("Bearer " + value);

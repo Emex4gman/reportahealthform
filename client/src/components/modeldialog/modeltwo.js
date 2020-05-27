@@ -56,7 +56,7 @@ const CustomModel = ({ message, succed }) => {
             <div className="model-content-body">{message}</div>
             <div className="model-content-footer">
               <button
-                className="btn btn-success"
+                className="btn btn-danger"
                 onClick={() => {
                   modelControl("close");
                 }}

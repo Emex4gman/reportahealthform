@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const facilitySchema = new Schema({
+const LabSchema = new Schema({
   reg_fac_name: {
     type: String,
     required: true,
@@ -84,10 +84,6 @@ const facilitySchema = new Schema({
   specilizations: {
     type: Array,
   },
-  humanResources: {
-    type: Object,
-  },
-  CouncilRegistrationNumber: { type: String },
   fac_email: {
     type: String,
     match: /^\S+@\S+\.\S+$/,
@@ -111,4 +107,4 @@ const facilitySchema = new Schema({
   timestamps: true,
 })
 
-module.exports = mongoose.model('Facility', facilitySchema)
+module.exports = mongoose.model('Lab', LabSchema)

@@ -17,12 +17,15 @@ import Checkbox from "../checkbox/checkbox";
 import { registerFacilityHandler } from "../../services/api.service";
 import CustomModel, { modelControl } from "../modeldialog/modeltwo";
 import RadioButtonInput from "../radioButtonInput/radioButtoninput";
+import HumanResourcesForm from "../humanResourcesForm/humanResourcesForm";
+
 class Form extends Component {
   static contextType = AppContext;
 
   constructor(props) {
     super(props);
     this.state = {
+      CouncilRegistrationNumber: "",
       succed: "",
       licenseStatus: "Unknown",
       registrationStatus: "Unknown",
@@ -49,6 +52,7 @@ class Form extends Component {
       daysOfOperations: [],
       modelMessage: "",
       specilizationsList: [],
+      humanResources: {},
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleLoaction = this.handleLoaction.bind(this);
@@ -147,44 +151,53 @@ class Form extends Component {
     });
   };
   validateForm() {
-    var elmnt = document.getElementById("reg-form");
+    let validated = false;
     if (
       this.state.reg_fac_name === "" ||
       this.state.street_name === "" ||
       this.state.lganame === "" ||
       this.state.statename === ""
     ) {
-      elmnt.scrollIntoView(true);
-      return;
+      window.scrollTo(0, 0);
+      modelControl("open");
+
+      this.setState({
+        modelMessage: "Some fileds are empty",
+        succed: false,
+      });
+    } else {
+      validated = true;
     }
+    return validated;
   }
   submit = async () => {
-    this.validateForm();
-    const { token, setIsLoading } = this.context;
-    setIsLoading(true);
-    modelControl("open");
-    this.setState({
-      modelMessage: "",
-      succed: "",
-    });
-    let data = await registerFacilityHandler(this.state, token);
+    if (this.validateForm()) {
+      const { token, setIsLoading } = this.context;
+      setIsLoading(true);
+      modelControl("open");
+      this.setState({
+        modelMessage: "",
+        succed: "",
+      });
+      let data = await registerFacilityHandler(this.state, token);
 
-    if (data.succed === true) {
-      this.setState({
-        modelMessage: "Facility was registered successfully ",
-        succed: data.succed,
-      });
-      setTimeout(() => {
-        window.location.reload();
-      }, 1500);
-    } else {
-      this.setState({
-        modelMessage: data.responce.message,
-        succed: data.succed,
-      });
+      if (data.succed === true) {
+        this.setState({
+          modelMessage: "Facility was registered successfully ",
+          succed: data.succed,
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
+      } else {
+        this.setState({
+          modelMessage: data.responce.message,
+          succed: data.succed,
+        });
+      }
+
+      setIsLoading(false);
     }
-
-    setIsLoading(false);
   };
 
   async handleSpecilizationsChange(prevState) {
@@ -192,8 +205,8 @@ class Form extends Component {
     //list depening on the content in the services state
     let serviceList = [...this.state.services];
     let newList = [];
+    //add medical Services
     if (serviceList.includes("Medical")) {
-      //add medical Services
       coreHospitalServices.filter((item) => {
         if (item.name === "Medical") {
           newList.push(...item.options);
@@ -201,8 +214,8 @@ class Form extends Component {
         return true;
       });
     }
+    //add Dental Services
     if (serviceList.includes("Dental")) {
-      //add Dental Services
       coreHospitalServices.filter((item) => {
         if (item.name === "Dental") {
           newList.push(...item.options);
@@ -211,8 +224,8 @@ class Form extends Component {
       });
     }
 
+    //add Pediatrics Services
     if (serviceList.includes("Pediatrics")) {
-      //add Pediatrics Services
       coreHospitalServices.filter((item) => {
         if (item.name === "Pediatrics") {
           newList.push(...item.options);
@@ -220,8 +233,8 @@ class Form extends Component {
         return true;
       });
     }
+    //add Surgical Services
     if (serviceList.includes("Surgical")) {
-      //add Surgical Services
       coreHospitalServices.filter((item) => {
         if (item.name === "Surgical") {
           newList.push(...item.options);
@@ -229,10 +242,19 @@ class Form extends Component {
         return true;
       });
     }
+    //add Obstetrics and Gynecology Services
     if (serviceList.includes("Obstetrics and Gynecology")) {
-      //add Obstetrics and Gynecology Services
       coreHospitalServices.filter((item) => {
         if (item.name === "Obstetrics and Gynecology") {
+          newList.push(...item.options);
+        }
+        return true;
+      });
+    }
+    //add Specical Services
+    if (serviceList.includes("Specical Services")) {
+      coreHospitalServices.filter((item) => {
+        if (item.name === "Specical Services") {
           newList.push(...item.options);
         }
         return true;
@@ -256,6 +278,7 @@ class Form extends Component {
         switchService = [];
         break;
     }
+    // console.log(this.state.humanResources);
     return (
       <div className="form-container " id="reg-form">
         <CustomModel
@@ -273,7 +296,9 @@ class Form extends Component {
           <h2>Register a facility</h2>
 
           <div className="form-group">
-            <label htmlFor="name">Name of facility</label>
+            <label htmlFor="name">
+              Name of facility <span className="required">*</span>
+            </label>
             <input
               autoComplete="off"
               className="form-control"
@@ -282,6 +307,23 @@ class Form extends Component {
               id="reg_fac_name"
               onChange={(e) => this.handleInputChange(e, "reg_fac_name")}
             />
+          </div>
+          <div className="form-group">
+            <label htmlFor="fac_type">
+              Type of facility <span className="required">*</span>
+            </label>
+            <select
+              required="required"
+              className="form-control"
+              name="fac_type"
+              id="fac_type"
+              onChange={(e) => this.handleSelectChange(e, "fac_type")}
+            >
+              <option value="1">Hospital</option>
+              <option value="2">Pharmacy</option>
+              <option value="3">Laboratory</option>
+              <option value="4">Imaging/Radiological Center</option>
+            </select>
           </div>
           <div className="form-group">
             <label htmlFor="phone_number">Facility phone number</label>
@@ -296,7 +338,9 @@ class Form extends Component {
           </div>
 
           <div className="form-group">
-            <label>Country</label>
+            <label>
+              Country <span className="required">*</span>
+            </label>
             <select
               className="form-control"
               value={this.state.country}
@@ -308,7 +352,10 @@ class Form extends Component {
             </select>
           </div>
           <div className="form-group">
-            <label htmlFor="statename"> State</label>
+            <label htmlFor="statename">
+              {" "}
+              State <span className="required">*</span>
+            </label>
             <select
               className="form-control"
               value={this.state.state}
@@ -320,7 +367,9 @@ class Form extends Component {
             </select>
           </div>
           <div className="form-group">
-            <label htmlFor="lganame">LGA</label>
+            <label htmlFor="lganame">
+              LGA <span className="required">*</span>
+            </label>
 
             <select
               className="form-control"
@@ -343,7 +392,24 @@ class Form extends Component {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="address">Facility Address</label>
+            <label htmlFor="facility_website">
+              Council of Nigeria Registration Number
+              <span className="required">*</span>
+            </label>
+            <input
+              className="form-control"
+              type="text"
+              name="CouncilRegistrationNumber"
+              id="CouncilRegistrationNumber"
+              onChange={(e) =>
+                this.handleInputChange(e, "CouncilRegistrationNumber")
+              }
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="address">
+              Facility Address <span className="required">*</span>
+            </label>
             <input
               className="form-control"
               type="text"
@@ -364,7 +430,9 @@ class Form extends Component {
           </div>
 
           <div className="form-group ">
-            <label htmlFor="ownership">Ownership</label>
+            <label htmlFor="ownership">
+              Ownership <span className="required">*</span>
+            </label>
             <select
               required="required"
               name="ownership"
@@ -378,7 +446,9 @@ class Form extends Component {
           </div>
 
           <div className="form-group ">
-            <label htmlFor="level">Facility Level</label>{" "}
+            <label htmlFor="level">
+              Facility Level <span className="required">*</span>
+            </label>{" "}
             <select
               required="required"
               name="facility_level"
@@ -392,7 +462,9 @@ class Form extends Component {
             </select>
           </div>
           <div className="form-group ">
-            <label htmlFor="operational_hours">Operational Hours</label>{" "}
+            <label htmlFor="operational_hours">
+              Operational Hours <span className="required">*</span>
+            </label>{" "}
             <select
               required="required"
               name="operational_hours"
@@ -407,7 +479,9 @@ class Form extends Component {
           </div>
           <div className="form-group ">
             <div className="radio-container">
-              <label>Operational Status</label>
+              <label>
+                Operational Status <span className="required">*</span>
+              </label>
               <div className="radio-items">
                 {operationalStatus.map((item) => (
                   <label key={item.name}>
@@ -426,7 +500,9 @@ class Form extends Component {
           </div>
           <div className="form-group ">
             <div className="radio-container">
-              <label>license Status</label>
+              <label>
+                license Status <span className="required">*</span>
+              </label>
               <div className="radio-items">
                 {licenseStatus.map((item) => (
                   <label key={item.name}>
@@ -445,7 +521,9 @@ class Form extends Component {
           </div>
           <div className="form-group ">
             <div className="radio-container">
-              <label>Registration Status</label>
+              <label>
+                Registration Status <span className="required">*</span>
+              </label>
               <div className="radio-items">
                 {registrationStatus.map((item) => (
                   <label key={item.name}>
@@ -464,7 +542,9 @@ class Form extends Component {
           </div>
           <div className="form-group ">
             <div className="radio-container">
-              <label>Premises Status</label>
+              <label>
+                Premises Status <span className="required">*</span>
+              </label>
               <div className="radio-items">
                 {premises.map((item) => (
                   <label key={item.name}>
@@ -481,7 +561,9 @@ class Form extends Component {
           </div>
           <div className="form-group">
             <div className="checkbox-container">
-              <span>Days of operations</span>
+              <span>
+                Days of operations <span className="required">*</span>
+              </span>
               <div className="checkbox-items">
                 {daysOfOperations.map((item) => (
                   <label key={item.key}>
@@ -496,24 +578,12 @@ class Form extends Component {
               </div>
             </div>
           </div>
-          <div className="form-group">
-            <label htmlFor="fac_type">Facility Type</label>
-            <select
-              required="required"
-              className="form-control"
-              name="fac_type"
-              id="fac_type"
-              onChange={(e) => this.handleSelectChange(e, "fac_type")}
-            >
-              <option value="1">Hospital</option>
-              <option value="2">Pharmacy</option>
-              <option value="3">Laboratory</option>
-              <option value="4">Imaging/Radiological Center</option>
-            </select>
-          </div>
+
           <div className="form-group">
             <div className="checkbox-container">
-              <span>Type of Services</span>
+              <span>
+                Type of Services <span className="required">*</span>
+              </span>
               <div className="checkbox-items">
                 {switchService.map((item) => (
                   <label key={item.key}>
@@ -530,7 +600,7 @@ class Form extends Component {
           </div>
           <div className="form-group">
             <div className="checkbox-container">
-              <span>Specilizations</span>
+              <span>Specilizations </span>
               <div className="checkbox-items">
                 {this.state.specilizationsList.map((item) => (
                   <label key={item.key}>
@@ -545,6 +615,15 @@ class Form extends Component {
               </div>
             </div>
           </div>
+          <HumanResourcesForm
+            fac_type={this.state.fac_type}
+            getVal={(data) => {
+              console.log(data);
+              this.setState({
+                humanResources: data,
+              });
+            }}
+          />
           <div className="form-group">
             <label htmlFor="profile">
               Provide an Image of the facility show a sign post with the
@@ -565,13 +644,15 @@ class Form extends Component {
           </div>
 
           <div className="form-group">
-            <button
-              onClick={this.submit}
-              type="submit"
-              className="form-control btn btn-success"
-            >
-              Submit
-            </button>
+            <div className="submit-button-container">
+              <button
+                onClick={this.submit}
+                type="submit"
+                className="form-control btn btn-success"
+              >
+                Submit
+              </button>
+            </div>
           </div>
         </form>
       </div>

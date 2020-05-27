@@ -32,6 +32,11 @@ const services = [
     key: "Obstetrics and Gynecology",
     label: "Obstetrics and Gynecology",
   },
+  {
+    name: "Specical Services",
+    key: "Specical Services",
+    label: "Specical Services",
+  },
 ];
 
 export default services;
@@ -214,12 +219,60 @@ const ObstetricsGynecology = [
   },
 ];
 
+const SpecicalService = [
+  {
+    name: "Antenatal Care (ANC)",
+    key: "Antenatal Care (ANC)",
+    label: "Antenatal Care (ANC)",
+  },
+  {
+    name: "Immunization",
+    key: "Immunization",
+    label: "Immunization",
+  },
+  {
+    name: "HIV/ AIDS Services",
+    key: "HIV/ AIDS Services",
+    label: "HIV/ AIDS Services",
+  },
+  {
+    name: "Non Communicable Diseases",
+    key: "Non Communicable Diseases",
+    label: "Non Communicable Diseases",
+  },
+  {
+    name: "Tuberculosis",
+    key: "Tuberculosis",
+    label: "Tuberculosis",
+  },
+  {
+    name: "Onsite Pharmacy",
+    key: "Onsite Pharmacy",
+    label: "Onsite Pharmacy",
+  },
+  {
+    name: "Onsite Imaging",
+    key: "Onsite Imaging",
+    label: "Onsite Imaging",
+  },
+  {
+    name: "Family Planning",
+    key: "Family Planning",
+    label: "Family Planning",
+  },
+  {
+    name: "Mortuary Services",
+    key: "Mortuary Services",
+    label: "Mortuary Services",
+  },
+];
 export const coreHospitalServices = [
   { name: "Medical", options: Medical },
   { name: "Surgical", options: Surgical },
   { name: "Pediatrics", options: Pediatrics },
   { name: "Dental", options: Dental },
   { name: "Obstetrics and Gynecology", options: ObstetricsGynecology },
+  { name: "Specical Services", options: SpecicalService },
 ];
 
 export const coreLabServices = {};

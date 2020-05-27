@@ -2,7 +2,9 @@
   width: 70%;
   /* padding: 20px; */
 }
-
+.required {
+  color: red;
+}
 input[type="checkbox"],
 input[type="radio"] {
   margin: 2px;
@@ -41,6 +43,17 @@ input[type="radio"] {
   padding-right: 5px;
 }
 
+label {
+  font-weight: 500;
+}
+.submit-button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.submit-button-container > button {
+  width: 50%;
+}
 @media only screen and (max-width: 600px) {
   .form-container {
     width: 100%;

@@ -65,11 +65,88 @@ export const fac_types = [
 //select
 export const ownershipList = [
   {
-    id: "1",
+    id: "Private",
     value: "Public",
   },
   {
-    id: "2",
+    id: "Private",
     value: "Private",
+  },
+];
+
+// iputes
+export const HospitalhumanResources = [
+  {
+    key: "medicalDoctor",
+    label: "Medical Doctor",
+  },
+  {
+    key: "Dentists",
+    label: "Dentists",
+  },
+  {
+    key: "Nurses (Single)",
+    label: "Nurses (Single)",
+  },
+  {
+    key: "Midwifes (Single)",
+    label: "Midwifes (Single)",
+  },
+  {
+    key: "Nurse/ Midwife (Double)",
+    label: "Nurse/ Midwife (Double)",
+  },
+  {
+    key: "Community Health Officer",
+    label: "Community Health Officer",
+  },
+  {
+    key: "Junior Community Health Extension Worker",
+    label: "Junior Community Health Extension Worker",
+  },
+  {
+    key: "Environmental Health Officer",
+    label: "Environmental Health Officer",
+  },
+  {
+    key: "Pharmacy Technicians",
+    label: "Pharmacy Technicians",
+  },
+
+  {
+    key: "Laboratory Scientists",
+    label: "Laboratory Scientists",
+  },
+  {
+    key: "Health Records / Health Information Mgt. Officers",
+    label: "Health Records / Health Information Mgt. Officers",
+  },
+  {
+    key: "Community Health Extension Worker",
+    label: "Community Health Extension Worker",
+  },
+  {
+    key: "Pharmacists",
+    label: "Pharmacists",
+  },
+  {
+    key: "Dental Technicians",
+    label: "Dental Technicians",
+  },
+];
+
+//inpute
+export const RadiologicalhumanResources = [
+  {
+    key: "Radiologists",
+    label: "Radiologists",
+  },
+  {
+    key: "Radiographers",
+    label: "Radiographers",
+  },
+  {
+    key: "Radiography Technicians",
+    label: "Radiography Technicians",
   },
 ];

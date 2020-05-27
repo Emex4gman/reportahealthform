@@ -1,0 +1,16 @@
+.human-resources {
+  display: flex;
+  /* flex-direction: column; */
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.human-resources > .form-group {
+  width: 45%;
+}
+
+@media only screen and (max-width: 600px) {
+  .human-resources > .form-group {
+    width: 100%;
+  }
+}
