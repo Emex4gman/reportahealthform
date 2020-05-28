@@ -17,7 +17,7 @@ const HumanResourcesForm = ({ fac_type = "1", getVal }) => {
     case "1":
       return (
         <div>
-          <label htmlFor="human-resources">
+          <label className="label" htmlFor="human-resources">
             Human Resources contact information
             <span className="required">*</span>
           </label>
@@ -44,7 +44,7 @@ const HumanResourcesForm = ({ fac_type = "1", getVal }) => {
     case "4":
       return (
         <div>
-          <label htmlFor="human-resources">
+          <label className="label" htmlFor="human-resources">
             Human Resources contact information
             <span className="required">*</span>
           </label>

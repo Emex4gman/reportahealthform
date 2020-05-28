@@ -53,6 +53,8 @@ class Form extends Component {
       modelMessage: "",
       specilizationsList: [],
       humanResources: {},
+      profile: {},
+      cac: {},
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleLoaction = this.handleLoaction.bind(this);
@@ -179,6 +181,7 @@ class Form extends Component {
         modelMessage: "",
         succed: "",
       });
+
       let data = await registerFacilityHandler(this.state, token);
 
       if (data.succed === true) {
@@ -252,9 +255,9 @@ class Form extends Component {
       });
     }
     //add Specical Services
-    if (serviceList.includes("Specical Services")) {
+    if (serviceList.includes("Other Services")) {
       coreHospitalServices.filter((item) => {
-        if (item.name === "Specical Services") {
+        if (item.name === "Other Services") {
           newList.push(...item.options);
         }
         return true;
@@ -289,14 +292,20 @@ class Form extends Component {
           className="form "
           autoComplete="off"
           id="reg-form"
+          encType="multipart/form-data"
           onSubmit={(e) => {
             e.preventDefault();
           }}
         >
           <h2>Register a facility</h2>
 
-          <div className="form-group">
-            <label htmlFor="name">
+          <div
+            className="form-group"
+            data-toggle="tooltip"
+            data-placement="right"
+            title="Name of the facility"
+          >
+            <label className="label" htmlFor="name">
               Name of facility <span className="required">*</span>
             </label>
             <input
@@ -309,7 +318,7 @@ class Form extends Component {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="fac_type">
+            <label className="label" htmlFor="fac_type">
               Type of facility <span className="required">*</span>
             </label>
             <select
@@ -326,7 +335,9 @@ class Form extends Component {
             </select>
           </div>
           <div className="form-group">
-            <label htmlFor="phone_number">Facility phone number</label>
+            <label className="label" htmlFor="phone_number">
+              Facility phone number
+            </label>
             <input
               maxLength={"14"}
               size={"10"}
@@ -340,7 +351,7 @@ class Form extends Component {
           </div>
 
           <div className="form-group">
-            <label>
+            <label className="label">
               Country <span className="required">*</span>
             </label>
             <select
@@ -354,7 +365,7 @@ class Form extends Component {
             </select>
           </div>
           <div className="form-group">
-            <label htmlFor="statename">
+            <label className="label" htmlFor="statename">
               {" "}
               State <span className="required">*</span>
             </label>
@@ -369,7 +380,7 @@ class Form extends Component {
             </select>
           </div>
           <div className="form-group">
-            <label htmlFor="lganame">
+            <label className="label" htmlFor="lganame">
               LGA <span className="required">*</span>
             </label>
 
@@ -384,7 +395,9 @@ class Form extends Component {
             </select>
           </div>
           <div className="form-group">
-            <label htmlFor="email">Facility email address</label>
+            <label className="label" htmlFor="email">
+              Facility email address
+            </label>
             <input
               className="form-control"
               type="email"
@@ -394,7 +407,7 @@ class Form extends Component {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="facility_website">
+            <label className="label" htmlFor="facility_website">
               Council of Nigeria Registration Number
               <span className="required">*</span>
             </label>
@@ -409,7 +422,7 @@ class Form extends Component {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="address">
+            <label className="label" htmlFor="address">
               Facility Address <span className="required">*</span>
             </label>
             <input
@@ -421,7 +434,9 @@ class Form extends Component {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="facility_website">Facility Website</label>
+            <label className="label" htmlFor="facility_website">
+              Facility Website
+            </label>
             <input
               className="form-control"
               type="text"
@@ -432,7 +447,7 @@ class Form extends Component {
           </div>
 
           <div className="form-group ">
-            <label htmlFor="ownership">
+            <label className="label" htmlFor="ownership">
               Ownership <span className="required">*</span>
             </label>
             <select
@@ -448,7 +463,7 @@ class Form extends Component {
           </div>
 
           <div className="form-group ">
-            <label htmlFor="level">
+            <label className="label" htmlFor="level">
               Facility Level <span className="required">*</span>
             </label>{" "}
             <select
@@ -464,7 +479,7 @@ class Form extends Component {
             </select>
           </div>
           <div className="form-group ">
-            <label htmlFor="operational_hours">
+            <label className="label" htmlFor="operational_hours">
               Operational Hours <span className="required">*</span>
             </label>{" "}
             <select
@@ -481,7 +496,7 @@ class Form extends Component {
           </div>
           <div className="form-group ">
             <div className="radio-container">
-              <label>
+              <label className="label">
                 Operational Status <span className="required">*</span>
               </label>
               <div className="radio-items">
@@ -502,7 +517,7 @@ class Form extends Component {
           </div>
           <div className="form-group ">
             <div className="radio-container">
-              <label>
+              <label className="label">
                 license Status <span className="required">*</span>
               </label>
               <div className="radio-items">
@@ -523,7 +538,7 @@ class Form extends Component {
           </div>
           <div className="form-group ">
             <div className="radio-container">
-              <label>
+              <label className="label">
                 Registration Status <span className="required">*</span>
               </label>
               <div className="radio-items">
@@ -544,7 +559,7 @@ class Form extends Component {
           </div>
           <div className="form-group ">
             <div className="radio-container">
-              <label>
+              <label className="label">
                 Premises Status <span className="required">*</span>
               </label>
               <div className="radio-items">
@@ -563,7 +578,7 @@ class Form extends Component {
           </div>
           <div className="form-group">
             <div className="checkbox-container">
-              <span>
+              <span className="label">
                 Days of operations <span className="required">*</span>
               </span>
               <div className="checkbox-items">
@@ -583,7 +598,7 @@ class Form extends Component {
 
           <div className="form-group">
             <div className="checkbox-container">
-              <span>
+              <span className="label">
                 Type of Services <span className="required">*</span>
               </span>
               <div className="checkbox-items">
@@ -602,7 +617,7 @@ class Form extends Component {
           </div>
           <div className="form-group">
             <div className="checkbox-container">
-              <span>Specilizations </span>
+              <span className="label">Specilizations </span>
               <div className="checkbox-items">
                 {this.state.specilizationsList.map((item) => (
                   <label key={item.key}>
@@ -627,22 +642,52 @@ class Form extends Component {
             }}
           />
           <div className="form-group">
-            <label htmlFor="profile">
-              Provide an Image of the facility show a sign post with the
-              facility name in it.
+            <label
+              className="label"
+              htmlFor="profile"
+              data-toggle="tooltip"
+              data-placement="right"
+              title="Provide an Image of the facility show a sign post with the
+              facility name in it."
+            >
+              Image of the facility
+              <i
+                className="fa fa-question-circle"
+                data-toggle="tooltip"
+                data-placement="right"
+                data-animation="true"
+                title="Provide an Image of the facility show a sign post with the
+              facility name in it."
+                aria-hidden="true"
+              ></i>
             </label>
             <input
               className="form-control"
               type="file"
-              name="profile"
+              name="file"
               id="profile"
+              onChange={(e) => {
+                const imagedata = e.target.files[0];
+                console.log(e.target.files);
+                this.setState({ profile: imagedata });
+              }}
             />
           </div>
           <div className="form-group">
             <label htmlFor="cac">
               Provide a copy of the CAC registration of the Facility.
             </label>
-            <input className="form-control" type="file" name="cac" id="cac" />
+            <input
+              onChange={(e) => {
+                const imagedata = e.target.files[0];
+                console.log(e.target.files);
+                this.setState({ cac: imagedata });
+              }}
+              className="form-control"
+              type="file"
+              name="cac"
+              id="cac"
+            />
           </div>
 
           <div className="form-group">

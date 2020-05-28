@@ -94,7 +94,7 @@ const facilitySchema = new Schema({
     trim: true,
     lowercase: true,
   },
-  cacImage: {
+  images: {
     type: Array,
   },
   average_rating: {

@@ -46,6 +46,7 @@ input[type="radio"] {
 
 label {
   font-weight: 500;
+  margin: 0;
 }
 .submit-button-container {
   display: flex;
@@ -54,6 +55,10 @@ label {
 
 .submit-button-container > button {
   width: 50%;
+}
+.label {
+  font-size: 1.06rem;
+  font-weight: bold;
 }
 @media only screen and (max-width: 600px) {
   .form-container {

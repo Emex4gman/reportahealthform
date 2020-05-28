@@ -32,6 +32,13 @@ exports.saveFacility = async (req, res, next) => {
     let body = req.body
     let id = req.userId
     let sig_unique_id = uuid()
+    let files = req.files
+    let images = [];
+
+    for (let index = 0; index < files.length; index++) {
+      images.push({ [files[index].fieldname]: files[index].url })
+    }
+
     /**
      * catter for an already regsiterfacility
      */
@@ -42,7 +49,7 @@ exports.saveFacility = async (req, res, next) => {
       error.statusCode = httpStatus.CONFLICT;
       throw error;
     }
-    let newFacility = await new Facility({ ...body, sig_unique_id, user: id }).save();
+    let newFacility = await new Facility({ ...body, sig_unique_id, user: id, images: images }).save();
 
     res.status(httpStatus.CREATED).json({
       messsage: "Facility created",

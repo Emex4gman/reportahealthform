@@ -33,9 +33,9 @@ const services = [
     label: "Obstetrics and Gynecology",
   },
   {
-    name: "Specical Services",
-    key: "Specical Services",
-    label: "Specical Services",
+    name: "Other Services",
+    key: "Other Services",
+    label: "Other Services",
   },
 ];
 
@@ -219,7 +219,7 @@ const ObstetricsGynecology = [
   },
 ];
 
-const SpecicalService = [
+const OtherServices = [
   {
     name: "Antenatal Care (ANC)",
     key: "Antenatal Care (ANC)",
@@ -272,7 +272,7 @@ export const coreHospitalServices = [
   { name: "Pediatrics", options: Pediatrics },
   { name: "Dental", options: Dental },
   { name: "Obstetrics and Gynecology", options: ObstetricsGynecology },
-  { name: "Specical Services", options: SpecicalService },
+  { name: "Other Services", options: OtherServices },
 ];
 
 export const coreLabServices = {};
