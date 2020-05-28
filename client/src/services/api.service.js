@@ -3,20 +3,17 @@ export const registerFacilityHandler = async (body, token) => {
   let responce;
   let succed = false;
   try {
-    const formData = objectToFormData(body);
-    // const data = new FormData();
-
-    // Object.keys(body).forEach((key) => {
-    //   data.append(key, body[key]);
-    // });
-    console.log(formData);
+    const data = new FormData();
+    Object.keys(body).forEach((key) => {
+      data.append(key, body[key]);
+    });
 
     let apiresponce = await fetch(
       "https://reportahealthform.herokuapp.com/v1/facility",
       // "http://localhost:7000/v1/facility",
       {
         method: "POST",
-        body: formData, //JSON.stringify(map),
+        body: data, //JSON.stringify(map),
         headers: {
           Authorization: token,
           // "Content-Type": "application/json",
