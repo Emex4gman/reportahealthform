@@ -118,8 +118,8 @@ export const HospitalhumanResources = [
     label: "Laboratory Scientists",
   },
   {
-    key: "Health Records / Health Information Mgt. Officers",
-    label: "Health Records / Health Information Mgt. Officers",
+    key: "Health Records / Health Information Mgt Officers",
+    label: "Health Records / Health Information Mgt Officers",
   },
   {
     key: "Community Health Extension Worker",
