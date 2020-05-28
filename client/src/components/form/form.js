@@ -52,7 +52,7 @@ class Form extends Component {
       daysOfOperations: [],
       modelMessage: "",
       specilizationsList: [],
-      humanResources: [],
+      humanResources: {},
       profile: {},
       cac: {},
     };
@@ -637,7 +637,7 @@ class Form extends Component {
             getVal={(data) => {
               console.log(data);
               this.setState({
-                humanResources: [data],
+                humanResources: JSON.stringify(data),
               });
             }}
           />

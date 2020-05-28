@@ -1,23 +1,22 @@
+import { objectToFormData } from "object-to-formdata";
 export const registerFacilityHandler = async (body, token) => {
   let responce;
   let succed = false;
   try {
-    const data = new FormData();
+    const formData = objectToFormData(body);
+    // const data = new FormData();
 
-    Object.keys(body).forEach((key) => {
-      data.append(key, body[key]);
-    });
-    console.log(...data);
-    // ohj.forEach((v, k) => {
-    //   console.log(k, v);
+    // Object.keys(body).forEach((key) => {
+    //   data.append(key, body[key]);
     // });
+    console.log(formData);
 
     let apiresponce = await fetch(
       "https://reportahealthform.herokuapp.com/v1/facility",
       // "http://localhost:7000/v1/facility",
       {
         method: "POST",
-        body: data, //JSON.stringify(map),
+        body: formData, //JSON.stringify(map),
         headers: {
           Authorization: token,
           // "Content-Type": "application/json",

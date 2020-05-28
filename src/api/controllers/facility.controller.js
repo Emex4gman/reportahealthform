@@ -34,6 +34,7 @@ exports.saveFacility = async (req, res, next) => {
     let sig_unique_id = uuid()
     let files = req.files
     let images = [];
+    let humanResources = JSON.parse(body.humanResources)
 
     for (let index = 0; index < files.length; index++) {
       images.push({ [files[index].fieldname]: files[index].url })
@@ -49,7 +50,7 @@ exports.saveFacility = async (req, res, next) => {
       error.statusCode = httpStatus.CONFLICT;
       throw error;
     }
-    let newFacility = await new Facility({ ...body, sig_unique_id, user: id, images: images }).save();
+    let newFacility = await new Facility({ ...body, sig_unique_id, user: id, images: images, humanResources }).save();
 
     res.status(httpStatus.CREATED).json({
       messsage: "Facility created",
