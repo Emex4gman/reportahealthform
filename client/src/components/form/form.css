@@ -27,8 +27,9 @@ input[type="radio"] {
 }
 .checkbox-items {
   display: flex;
-  align-items: center;
-  flex-wrap: wrap;
+  /* align-items: center; */
+  /* flex-wrap: wrap; */
+  flex-direction: column;
 }
 .checkbox-items > label {
   padding-right: 0.3rem;
@@ -38,7 +39,7 @@ input[type="radio"] {
 }
 
 .radio-items > label {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   padding-right: 5px;
 }

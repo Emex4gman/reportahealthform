@@ -485,7 +485,6 @@ class Form extends Component {
               <div className="radio-items">
                 {operationalStatus.map((item) => (
                   <label key={item.name}>
-                    {item.name}
                     <RadioButtonInput
                       value={item.name}
                       name="operationalStatus"
@@ -493,6 +492,7 @@ class Form extends Component {
                         this.handleRadioChange(e, "operationalStatus")
                       }
                     />
+                    {item.name}
                   </label>
                 ))}
               </div>
@@ -506,7 +506,6 @@ class Form extends Component {
               <div className="radio-items">
                 {licenseStatus.map((item) => (
                   <label key={item.name}>
-                    {item.name}
                     <RadioButtonInput
                       value={item.name}
                       name="licenseStatus"
@@ -514,6 +513,7 @@ class Form extends Component {
                         this.handleRadioChange(e, "licenseStatus")
                       }
                     />
+                    {item.name}
                   </label>
                 ))}
               </div>
@@ -527,7 +527,6 @@ class Form extends Component {
               <div className="radio-items">
                 {registrationStatus.map((item) => (
                   <label key={item.name}>
-                    {item.name}
                     <RadioButtonInput
                       value={item.name}
                       name="registrationStatus"
@@ -535,6 +534,7 @@ class Form extends Component {
                         this.handleRadioChange(e, "registrationStatus")
                       }
                     />
+                    {item.name}
                   </label>
                 ))}
               </div>
@@ -548,12 +548,12 @@ class Form extends Component {
               <div className="radio-items">
                 {premises.map((item) => (
                   <label key={item.name}>
-                    {item.name}
                     <RadioButtonInput
                       value={item.name}
                       name="premises"
                       onChange={(e) => this.handleRadioChange(e, "premises")}
                     />
+                    {item.name}
                   </label>
                 ))}
               </div>
@@ -567,12 +567,12 @@ class Form extends Component {
               <div className="checkbox-items">
                 {daysOfOperations.map((item) => (
                   <label key={item.key}>
-                    {item.name}{" "}
                     <Checkbox
                       name={item.name}
                       checked={this.state.checkedItems.get(item.name)}
                       onChange={(e) => this.handleChange(e, "daysOfOperations")}
                     />
+                    {item.name}
                   </label>
                 ))}
               </div>
@@ -587,12 +587,12 @@ class Form extends Component {
               <div className="checkbox-items">
                 {switchService.map((item) => (
                   <label key={item.key}>
-                    {item.name}{" "}
                     <Checkbox
                       name={item.name}
                       checked={this.state.checkedItems.get(item.name)}
                       onChange={(e) => this.handleChange(e, "services")}
                     />
+                    {item.name}
                   </label>
                 ))}
               </div>
@@ -604,12 +604,12 @@ class Form extends Component {
               <div className="checkbox-items">
                 {this.state.specilizationsList.map((item) => (
                   <label key={item.key}>
-                    {item.name}{" "}
                     <Checkbox
                       name={item.name}
                       checked={this.state.checkedItems.get(item.name)}
                       onChange={(e) => this.handleChange(e, "specilizations")}
-                    />
+                    />{" "}
+                    {item.name}
                   </label>
                 ))}
               </div>
