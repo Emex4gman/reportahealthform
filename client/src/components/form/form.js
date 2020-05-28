@@ -328,9 +328,11 @@ class Form extends Component {
           <div className="form-group">
             <label htmlFor="phone_number">Facility phone number</label>
             <input
+              maxLength={"14"}
+              size={"10"}
               autoComplete="off"
               className="form-control"
-              type="number"
+              type="text"
               name="phone_number"
               id="phone_number"
               onChange={(e) => this.handleInputChange(e, "phone_number")}
@@ -650,7 +652,7 @@ class Form extends Component {
                 type="submit"
                 className="form-control btn btn-success"
               >
-                Submit
+                Register Facility
               </button>
             </div>
           </div>
