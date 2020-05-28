@@ -57,7 +57,7 @@ export const fac_types = [
     fac_type: "Laboratory",
   },
   {
-    id: "1",
+    id: "4",
     fac_type: "Imaging/ Radiological Center",
   },
 ];

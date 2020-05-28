@@ -45,14 +45,14 @@ class Form extends Component {
       latitude: "",
       longitude: "",
       fac_type: "1",
-      ownership: "private",
-      facility_level: "primary",
+      ownership: "1",
+      facility_level: "1",
       services: [],
       specilizations: [],
       daysOfOperations: [],
       modelMessage: "",
       specilizationsList: [],
-      humanResources: {},
+      humanResources: [],
       profile: {},
       cac: {},
     };
@@ -637,7 +637,7 @@ class Form extends Component {
             getVal={(data) => {
               console.log(data);
               this.setState({
-                humanResources: data,
+                humanResources: [data],
               });
             }}
           />

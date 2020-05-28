@@ -85,7 +85,7 @@ const facilitySchema = new Schema({
     type: Array,
   },
   humanResources: {
-
+    type: Array
   },
   CouncilRegistrationNumber: { type: String },
   fac_email: {
