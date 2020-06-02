@@ -9,7 +9,7 @@ const { parser } = require('../../middlewares/multer')
 router.route("/").post(authenticate, parser.any(), facilityController.saveFacility)
 router.route('/user').get(authenticate, authorize(USER), facilityController.getUserFacilities)
 router.route('/').get(authenticate, authorize(ADMIN), facilityController.getAllFacility)
-
+router.route('/:id').patch(authenticate, authorize(USER), facilityController.updateFacility)
 
 
 

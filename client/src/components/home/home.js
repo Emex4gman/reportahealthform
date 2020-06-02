@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { AppContext } from "../../store/store";
 import "./home.css";
-import CustomModel, { modelControl } from "../modeldialog/modeltwo";
+import CustomModel, { modelControl } from "../modeldialog/customModel";
 const Home = (props) => {
   const {
     setIsLoading,

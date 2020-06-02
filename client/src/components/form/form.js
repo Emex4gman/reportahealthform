@@ -15,7 +15,7 @@ import {
 } from "../../data/options";
 import Checkbox from "../checkbox/checkbox";
 import { registerFacilityHandler } from "../../services/api.service";
-import CustomModel, { modelControl } from "../modeldialog/modeltwo";
+import CustomModel, { modelControl } from "../modeldialog/customModel";
 import RadioButtonInput from "../radioButtonInput/radioButtoninput";
 import HumanResourcesForm from "../humanResourcesForm/humanResourcesForm";
 
@@ -52,7 +52,7 @@ class Form extends Component {
       daysOfOperations: [],
       modelMessage: "",
       specilizationsList: [],
-      humanResources: {},
+      humanResources: "{}",
       profile: {},
       cac: {},
     };

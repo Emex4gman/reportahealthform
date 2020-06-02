@@ -1,6 +1,6 @@
 import React from "react";
 import "./facilityTile.css";
-const FacilityTile = ({ facData, onClick }) => {
+const FacilityTile = ({ facData, onClick, onUpdateCLick }) => {
   return (
     <div className="facility-item">
       {/* <div class="alert alert-primary" role="alert">
@@ -8,7 +8,11 @@ const FacilityTile = ({ facData, onClick }) => {
       </div> */}
       <span onClick={onClick}>{facData.reg_fac_name}</span>
       <div className="action-button">
-        <button type="button" className="btn btn-warning">
+        <button
+          onClick={onUpdateCLick}
+          type="button"
+          className="btn btn-warning"
+        >
           UPDATE
         </button>
         {/* <button type="button" className="btn btn-danger">

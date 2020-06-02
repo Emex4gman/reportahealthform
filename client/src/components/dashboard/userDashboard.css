@@ -9,8 +9,8 @@
 .user-profile-container {
   width: 25%;
   background-color: white;
-  height: 75%;
-  max-height: 500px;
+  /* height: 75%; */
+  max-height: 300px;
   border-radius: 5px;
 }
 .user-table {

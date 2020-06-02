@@ -1,4 +1,3 @@
-import { objectToFormData } from "object-to-formdata";
 export const registerFacilityHandler = async (body, token) => {
   let responce;
   let succed = false;

@@ -95,4 +95,5 @@
 
 .model-content-footer > button {
   background-color: var(--border-color);
+  border-color: var(--border-color);
 }

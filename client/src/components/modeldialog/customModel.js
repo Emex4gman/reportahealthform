@@ -1,6 +1,8 @@
 import React from "react";
-import "./model.css";
-
+import "./customModel.css";
+/**
+ * action can either be  'open' or 'close'
+ */
 export const modelControl = (action) => {
   switch (action) {
     case "open":

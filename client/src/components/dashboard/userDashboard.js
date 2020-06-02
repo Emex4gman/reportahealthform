@@ -5,6 +5,7 @@ import { AppContext } from "../../store/store";
 import { getFacilityHandler } from "../../services/api.service";
 import FacilityTile from "../mics/facilityTile";
 import FacilityPreview from "../mics/facilityPreview";
+import CustomModel, { modelControl } from "../modeldialog/customModel";
 class UserDashboard extends React.Component {
   static contextType = AppContext;
   constructor(props) {
@@ -13,6 +14,7 @@ class UserDashboard extends React.Component {
       hasFacililtyRegistered: null,
       isOpen: false,
       facData: {},
+      toUpdate: false,
     };
   }
   componentDidMount() {
@@ -59,6 +61,11 @@ class UserDashboard extends React.Component {
               <FacilityTile
                 facData={fac}
                 key={fac._id}
+                onUpdateCLick={() => {
+                  console.log("update");
+                  modelControl("open");
+                  this.setState({ toUpdate: !this.state.toUpdate });
+                }}
                 onClick={() => {
                   this.selectFacDataHandler(fac);
                   this.togglePreviewHandler();
@@ -98,6 +105,7 @@ class UserDashboard extends React.Component {
 
     return (
       <div className="user-dashboard">
+        {/* <CustomModel /> */}
         <div className="user-profile-container">
           <div className="user-image">
             <span>{userData.email.substring(0, 2).toUpperCase()}</span>

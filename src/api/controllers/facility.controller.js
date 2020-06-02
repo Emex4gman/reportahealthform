@@ -1,4 +1,5 @@
 const Facility = require('../models/facility.model')
+const mongoose = require('mongoose')
 const User = require('../models/user.model')
 const httpStatus = require('http-status')
 const uuid = require('uuid').v4
@@ -24,7 +25,7 @@ exports.getUserFacilities = async (req, res, next) => {
     })
 
   } catch (error) {
-
+    next(error)
   }
 }
 exports.saveFacility = async (req, res, next) => {
@@ -34,7 +35,7 @@ exports.saveFacility = async (req, res, next) => {
     let sig_unique_id = uuid()
     let files = req.files
     let images = [];
-    let humanResources = JSON.parse(body.humanResources)
+    let humanResources = body.humanResources ? JSON.parse(body.humanResources) : {}
 
     for (let index = 0; index < files.length; index++) {
       images.push({ [files[index].fieldname]: files[index].url })
@@ -50,14 +51,51 @@ exports.saveFacility = async (req, res, next) => {
       error.statusCode = httpStatus.CONFLICT;
       throw error;
     }
-    let newFacility = await new Facility({ ...body, sig_unique_id, user: id, images: images, humanResources }).save();
-
+    let newFacility = await new Facility({ ...body, sig_unique_id, user: id, images: images, humanResources });
+    await newFacility.save();
     res.status(httpStatus.CREATED).json({
       messsage: "Facility created",
       data: { newFacility },
     })
   } catch (error) {
+    console.log(error)
+    next(error)
 
+  }
+}
+
+exports.updateFacility = async (req, res, next) => {
+  try {
+    let body = req.body
+    let userId = req.userId
+    let humanResources = body.humanResources ? JSON.parse(body.humanResources) : {}
+    let _id = mongoose.Types.ObjectId(req.params.id)
+    console.log(body)
+    // find if the fasility exist, 
+    let foundFacility = await Facility.findById(_id);
+    if (!foundFacility) {
+      let error = new Error("No record found")
+      error.statusCode = httpStatus.NOT_FOUND
+      throw error;
+    }
+    //validate a user
+    if (userId !== foundFacility.userId) {
+      let error = new Error("You are not authoried to make any changes ")
+      error.statusCode = httpStatus.UNAUTHORIZED
+      throw error;
+    }
+    //spread the old file
+    await foundFacility.update({ ...body, humanResources });
+    await foundFacility.save()
+
+    // update with the new data
+    res.status(httpStatus.CREATED).json({
+      messsage: "Facility updated",
+    })
+
+  } catch (error) {
     next(error)
   }
+
+
 }

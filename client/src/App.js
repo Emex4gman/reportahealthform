@@ -5,7 +5,7 @@ import Footer from "./components/footer/footer";
 import { AppContext } from "./store/store";
 import Home from "./components/home/home";
 import Loader from "./components/loader/loader";
-import UserDashboard from "./components/user/userDashboard";
+import UserDashboard from "./components/dashboard/userDashboard";
 export default class App extends Component {
   static contextType = AppContext;
   render() {
