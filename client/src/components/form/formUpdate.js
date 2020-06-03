@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./form.css";
+// import "./formUpdate.css";
 import { AppContext } from "../../store/store";
 import { lgas, states } from "../../data/states_lgas";
 import services, {
@@ -14,48 +14,45 @@ import {
   premises,
 } from "../../data/options";
 import Checkbox from "../checkbox/checkbox";
-import { registerFacilityHandler } from "../../services/api.service";
-import CustomModel, { modelControl } from "../modeldialog/customModel";
+import { updateFacilityHandler } from "../../services/api.service";
 import RadioButtonInput from "../radioButtonInput/radioButtoninput";
 import HumanResourcesForm from "../humanResourcesForm/humanResourcesForm";
 
-class Form extends Component {
+class FormUpdate extends Component {
   static contextType = AppContext;
 
   constructor(props) {
     super(props);
+    const { facData } = this.props;
+
     this.state = {
-      CouncilRegistrationNumber: "",
-      succed: "",
-      licenseStatus: "Unknown",
-      registrationStatus: "Unknown",
-      premises: "",
-      facility_website: "",
-      phone_number: "",
-      operational_hours: "24h",
-      operationalStatus: "",
-      lgaOptions: [],
-      fac_email: "",
-      stateOptions: [],
-      checkedItems: new Map(),
+      facility_website: facData.facility_website || "",
+      CouncilRegistrationNumber: facData.CouncilRegistrationNumber,
+      licenseStatus: facData.licenseStatus,
+      registrationStatus: facData.registrationStatus,
+      premises: facData.premises,
+      phone_number: facData.phone_number,
+      operational_hours: facData.operational_hours,
+      operationalStatus: facData.operationalStatus,
+      fac_email: facData.fac_email,
       country: "nigeria",
-      reg_fac_name: "",
-      street_name: "",
-      lganame: "",
-      statename: "",
+      reg_fac_name: facData.reg_fac_name,
+      street_name: facData.street_name,
+      statename: facData.statename,
+      lganame: facData.lganame,
       latitude: "",
       longitude: "",
-      fac_type: "1",
-      ownership: "1",
-      facility_level: "1",
+      fac_type: facData.fac_type,
+      ownership: facData.ownership,
+      facility_level: facData.facility_level,
       services: [],
       specilizations: [],
       daysOfOperations: [],
-      modelMessage: "",
       specilizationsList: [],
-      humanResources: "{}",
-      profile: {},
-      cac: {},
+      humanResources: facData.humanResources || "{}",
+      lgaOptions: [],
+      stateOptions: [],
+      checkedItems: new Map(),
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleLoaction = this.handleLoaction.bind(this);
@@ -77,7 +74,11 @@ class Form extends Component {
 
   componentDidMount() {
     this.handleLoaction();
-    // const {  token } = this.context;
+    this.loadStateOptions();
+    this.loadLgaOptions(this.state.statename);
+  }
+
+  loadStateOptions() {
     let stateOptions = [
       <option key="00" value="00">
         select state
@@ -92,7 +93,6 @@ class Form extends Component {
     });
     this.setState({ stateOptions: stateOptions });
   }
-
   componentDidUpdate(prevProps, prevState) {
     if (prevState.services.length !== this.state.services.length) {
       this.handleSpecilizationsChange(prevState);
@@ -136,23 +136,27 @@ class Form extends Component {
     this.setState({ [key]: e.target.value });
   };
   handleStateSelect = (e, key) => {
+    this.loadLgaOptions(e.target.value);
+    this.setState({ [key]: e.target.value });
+  };
+
+  loadLgaOptions = (stateValue) => {
     let lgaOptions = [
       <option key="00" value="00">
         select lag
       </option>,
     ];
-
     lgas.forEach((item) => {
-      if (item.state_id === e.target.value)
+      if (item.state_id === stateValue)
         lgaOptions.push(
           <option key={item.lga_id} value={item.lga_id}>
             {item.lga}
           </option>
         );
-
-      this.setState({ lgaOptions: lgaOptions, [key]: e.target.value });
     });
+    this.setState({ lgaOptions: lgaOptions });
   };
+
   validateForm() {
     let validated = false;
     if (
@@ -162,7 +166,7 @@ class Form extends Component {
       this.state.statename === ""
     ) {
       window.scrollTo(0, 0);
-      modelControl("open");
+      // modelControl("open");
 
       this.setState({
         modelMessage: "Some fileds are empty",
@@ -174,30 +178,23 @@ class Form extends Component {
     return validated;
   }
   submit = async () => {
+    const { facData, closeForm, setModelMessage, setSucced } = this.props;
+
+    console.log(this.state);
     if (this.validateForm()) {
       const { token, setIsLoading } = this.context;
       setIsLoading(true);
-      modelControl("open");
-      this.setState({
-        modelMessage: "",
-        succed: "",
-      });
-
-      let data = await registerFacilityHandler(this.state, token);
-
+      closeForm();
+      let data = await updateFacilityHandler(this.state, token, facData._id);
       if (data.succed === true) {
-        this.setState({
-          modelMessage: "Facility was registered successfully ",
-          succed: data.succed,
-        });
+        setModelMessage("Facility was updated successfully");
+        setSucced(data.succed);
         setTimeout(() => {
           window.location.reload();
-        }, 1500);
+        }, 2000);
       } else {
-        this.setState({
-          modelMessage: data.responce.message,
-          succed: data.succed,
-        });
+        setModelMessage(data.responce.message);
+        setSucced(data.succed);
       }
 
       setIsLoading(false);
@@ -282,13 +279,8 @@ class Form extends Component {
         switchService = [];
         break;
     }
-    // console.log(this.state.humanResources);
     return (
-      <div className="form-container " id="reg-form">
-        <CustomModel
-          message={this.state.modelMessage}
-          succed={this.state.succed}
-        />
+      <div className="form-container update" id="reg-form">
         <form
           className="form "
           autoComplete="off"
@@ -298,7 +290,7 @@ class Form extends Component {
             e.preventDefault();
           }}
         >
-          <h2>Register a facility</h2>
+          <h2>Update a facility</h2>
 
           <div
             className="form-group"
@@ -310,6 +302,7 @@ class Form extends Component {
               Name of facility <span className="required">*</span>
             </label>
             <input
+              defaultValue={this.state.reg_fac_name}
               autoComplete="off"
               className="form-control"
               type="text"
@@ -323,6 +316,7 @@ class Form extends Component {
               Type of facility <span className="required">*</span>
             </label>
             <select
+              value={this.state.fac_type}
               required="required"
               className="form-control"
               name="fac_type"
@@ -340,6 +334,7 @@ class Form extends Component {
               Facility phone number
             </label>
             <input
+              defaultValue={this.state.phone_number}
               maxLength={"14"}
               size={"10"}
               autoComplete="off"
@@ -367,12 +362,11 @@ class Form extends Component {
           </div>
           <div className="form-group">
             <label className="label" htmlFor="statename">
-              {" "}
               State <span className="required">*</span>
             </label>
             <select
               className="form-control"
-              value={this.state.state}
+              value={this.state.statename}
               name="statename"
               id="statename"
               onChange={(e) => this.handleStateSelect(e, "statename")}
@@ -387,7 +381,7 @@ class Form extends Component {
 
             <select
               className="form-control"
-              value={this.state.lga}
+              value={this.state.lganame}
               name="lganame"
               id="lganame"
               onChange={(e) => this.handleInputChange(e, "lganame")}
@@ -403,6 +397,7 @@ class Form extends Component {
               className="form-control"
               type="email"
               name="email"
+              defaultValue={this.state.fac_email}
               id="email"
               onChange={(e) => this.handleInputChange(e, "fac_email")}
             />
@@ -415,6 +410,7 @@ class Form extends Component {
             <input
               className="form-control"
               type="text"
+              defaultValue={this.state.CouncilRegistrationNumber}
               name="CouncilRegistrationNumber"
               id="CouncilRegistrationNumber"
               onChange={(e) =>
@@ -430,6 +426,7 @@ class Form extends Component {
               className="form-control"
               type="text"
               name="street_name"
+              defaultValue={this.state.street_name}
               id="address"
               onChange={(e) => this.handleInputChange(e, "street_name")}
             />
@@ -442,6 +439,7 @@ class Form extends Component {
               className="form-control"
               type="text"
               name="facility_website"
+              defaultValue={this.state.facility_website}
               id="facility_website"
               onChange={(e) => this.handleInputChange(e, "facility_website")}
             />
@@ -452,6 +450,7 @@ class Form extends Component {
               Ownership <span className="required">*</span>
             </label>
             <select
+              value={this.state.ownership}
               required="required"
               name="ownership"
               id="ownership"
@@ -468,6 +467,7 @@ class Form extends Component {
               Facility Level <span className="required">*</span>
             </label>{" "}
             <select
+              value={this.state.facility_level}
               required="required"
               name="facility_level"
               id="level"
@@ -485,6 +485,7 @@ class Form extends Component {
             </label>{" "}
             <select
               required="required"
+              value={this.state.operational_hours}
               name="operational_hours"
               id="operational_hours"
               className="form-control"
@@ -506,6 +507,11 @@ class Form extends Component {
                     <RadioButtonInput
                       value={item.name}
                       name="operationalStatus"
+                      ischecked={
+                        item.name === this.state.operationalStatus
+                          ? true
+                          : false
+                      }
                       onChange={(e) =>
                         this.handleRadioChange(e, "operationalStatus")
                       }
@@ -526,6 +532,9 @@ class Form extends Component {
                   <label key={item.name}>
                     <RadioButtonInput
                       value={item.name}
+                      ischecked={
+                        item.name === this.state.licenseStatus ? true : false
+                      }
                       name="licenseStatus"
                       onChange={(e) =>
                         this.handleRadioChange(e, "licenseStatus")
@@ -547,6 +556,11 @@ class Form extends Component {
                   <label key={item.name}>
                     <RadioButtonInput
                       value={item.name}
+                      ischecked={
+                        item.name === this.state.registrationStatus
+                          ? true
+                          : false
+                      }
                       name="registrationStatus"
                       onChange={(e) =>
                         this.handleRadioChange(e, "registrationStatus")
@@ -569,6 +583,9 @@ class Form extends Component {
                     <RadioButtonInput
                       value={item.name}
                       name="premises"
+                      ischecked={
+                        item.name === this.state.premises ? true : false
+                      }
                       onChange={(e) => this.handleRadioChange(e, "premises")}
                     />
                     {item.name}
@@ -642,54 +659,6 @@ class Form extends Component {
               });
             }}
           />
-          <div className="form-group">
-            <label
-              className="label"
-              htmlFor="profile"
-              data-toggle="tooltip"
-              data-placement="right"
-              title="Provide an Image of the facility show a sign post with the
-              facility name in it."
-            >
-              Image of the facility
-              <i
-                className="fa fa-question-circle"
-                data-toggle="tooltip"
-                data-placement="right"
-                data-animation="true"
-                title="Provide an Image of the facility show a sign post with the
-              facility name in it."
-                aria-hidden="true"
-              ></i>
-            </label>
-            <input
-              className="form-control"
-              type="file"
-              name="file"
-              id="profile"
-              onChange={(e) => {
-                const imagedata = e.target.files[0];
-                console.log(e.target.files);
-                this.setState({ profile: imagedata });
-              }}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="cac">
-              Provide a copy of the CAC registration of the Facility.
-            </label>
-            <input
-              onChange={(e) => {
-                const imagedata = e.target.files[0];
-                console.log(e.target.files);
-                this.setState({ cac: imagedata });
-              }}
-              className="form-control"
-              type="file"
-              name="cac"
-              id="cac"
-            />
-          </div>
 
           <div className="form-group">
             <div className="submit-button-container">
@@ -698,7 +667,7 @@ class Form extends Component {
                 type="submit"
                 className="form-control btn btn-success"
               >
-                Register Facility
+                Update Facility
               </button>
             </div>
           </div>
@@ -708,4 +677,4 @@ class Form extends Component {
   }
 }
 
-export default Form;
+export default FormUpdate;

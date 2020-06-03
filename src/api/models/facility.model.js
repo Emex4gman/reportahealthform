@@ -77,6 +77,10 @@ const facilitySchema = new Schema({
     type: Array,
     required: true
   },
+  facility_website: {
+    type: String,
+
+  },
   daysOfOperations: {
     type: Array,
 

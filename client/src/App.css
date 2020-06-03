@@ -9,7 +9,7 @@ body {
   scroll-behavior: smooth;
   margin: 0;
   padding: 0;
-  /* height: 100%; */
+  min-height: 100vh;
   background: linear-gradient(
       to bottom right,
       rgba(72, 72, 212, 0),
@@ -22,6 +22,6 @@ body {
 .main {
   margin-top: 66px;
   display: flex;
-  /* min-height: 100vh; */
+  min-height: 100vh;
   padding: 40px 0 50px 0;
 }

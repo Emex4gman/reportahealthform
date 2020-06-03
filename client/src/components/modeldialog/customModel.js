@@ -32,7 +32,7 @@ export const modelControl = (action) => {
   }
 };
 
-const CustomModel = ({ message, succed }) => {
+const CustomModel = ({ message, succed, htmlElement }) => {
   let loaderIcon;
   switch (succed) {
     case true:
@@ -53,9 +53,16 @@ const CustomModel = ({ message, succed }) => {
           className="model-content-container"
         >
           <div className="model-content ">
-            <div className="model-content-header">{loaderIcon}</div>
+            {htmlElement ? (
+              htmlElement
+            ) : (
+              <div>
+                <div className="model-content-header">{loaderIcon}</div>
 
-            <div className="model-content-body">{message}</div>
+                <div className="model-content-body">{message}</div>
+              </div>
+            )}
+
             <div className="model-content-footer">
               <button
                 className="btn btn-danger"

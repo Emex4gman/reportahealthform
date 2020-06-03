@@ -6,6 +6,7 @@ class FacilityClass {
     this.fac_type =
       fac_types.filter((fac_type) => fac_type.id === obj.fac_type)[0]
         .fac_type || "";
+    this.CouncilRegistrationNumber = obj.CouncilRegistrationNumber;
     this.street_name = obj.street_name || "";
     this.phone_number = obj.phone_number || "";
     this.operational_hours = obj.operational_hours || "";

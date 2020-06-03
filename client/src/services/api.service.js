@@ -56,3 +56,30 @@ export const getFacilityHandler = async (token) => {
   return { succed, responce };
   // return responce;
 };
+
+export const updateFacilityHandler = async (body, token, id) => {
+  let responce;
+  let succed = false;
+  try {
+    let apiresponce = await fetch(
+      "https://reportahealthform.herokuapp.com/v1/facility/" + id,
+      // "http://localhost:7000/v1/facility/" + id,
+      {
+        method: "PATCH",
+        body: JSON.stringify(body),
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (apiresponce.status === 201) {
+      succed = true;
+    }
+    responce = await apiresponce.json();
+  } catch (error) {
+    responce = error;
+    succed = false;
+  }
+  return { responce, succed };
+};

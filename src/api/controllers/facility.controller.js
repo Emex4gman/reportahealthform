@@ -70,7 +70,7 @@ exports.updateFacility = async (req, res, next) => {
     let userId = req.userId
     let humanResources = body.humanResources ? JSON.parse(body.humanResources) : {}
     let _id = mongoose.Types.ObjectId(req.params.id)
-    console.log(body)
+
     // find if the fasility exist, 
     let foundFacility = await Facility.findById(_id);
     if (!foundFacility) {
@@ -78,12 +78,12 @@ exports.updateFacility = async (req, res, next) => {
       error.statusCode = httpStatus.NOT_FOUND
       throw error;
     }
-    //validate a user
-    if (userId !== foundFacility.userId) {
-      let error = new Error("You are not authoried to make any changes ")
-      error.statusCode = httpStatus.UNAUTHORIZED
-      throw error;
-    }
+    //validate the  user
+    // if (userId !== foundFacility.userId) {
+    //   let error = new Error("You are not authoried to make any changes ")
+    //   error.statusCode = httpStatus.UNAUTHORIZED
+    //   throw error;
+    // }
     //spread the old file
     await foundFacility.update({ ...body, humanResources });
     await foundFacility.save()
