@@ -35,8 +35,8 @@ export const getFacilityHandler = async (token) => {
   let succed = false;
   try {
     let apiresponce = await fetch(
-      "https://reportahealthform.herokuapp.com/v1/facility/user",
-      // " http://localhost:7000/v1/facility/user",
+      // "https://reportahealthform.herokuapp.com/v1/facility/user",
+      " http://localhost:7000/v1/facility/user",
       {
         method: "GET",
         headers: {
@@ -62,8 +62,8 @@ export const updateFacilityHandler = async (body, token, id) => {
   let succed = false;
   try {
     let apiresponce = await fetch(
-      "https://reportahealthform.herokuapp.com/v1/facility/" + id,
-      // "http://localhost:7000/v1/facility/" + id,
+      // "https://reportahealthform.herokuapp.com/v1/facility/" + id,
+      "http://localhost:7000/v1/facility/" + id,
       {
         method: "PATCH",
         body: JSON.stringify(body),

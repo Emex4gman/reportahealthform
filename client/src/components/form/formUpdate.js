@@ -179,19 +179,20 @@ class FormUpdate extends Component {
   }
   submit = async () => {
     const { facData, closeForm, setModelMessage, setSucced } = this.props;
-
-    console.log(this.state);
     if (this.validateForm()) {
       const { token, setIsLoading } = this.context;
       setIsLoading(true);
+      setModelMessage("");
+      setSucced("");
       closeForm();
       let data = await updateFacilityHandler(this.state, token, facData._id);
       if (data.succed === true) {
         setModelMessage(data.responce.message);
+
         setSucced(data.succed);
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
+        // setTimeout(() => {
+        //   window.location.reload();
+        // }, 2000);
       } else {
         setModelMessage(data.responce.message);
         setSucced(data.succed);

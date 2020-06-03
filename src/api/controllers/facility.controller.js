@@ -79,7 +79,7 @@ exports.updateFacility = async (req, res, next) => {
       throw error;
     }
     //validate the  user
-    if (userId.toString() !== foundFacility.userId.toString()) {
+    if (userId.toString() !== foundFacility.user.toString()) {
       let error = new Error("You are not authoried to make any changes")
       error.statusCode = httpStatus.UNAUTHORIZED
       throw error;
@@ -91,7 +91,7 @@ exports.updateFacility = async (req, res, next) => {
 
     // update with the new data
     res.status(httpStatus.CREATED).json({
-      messsage: "Facility updated",
+      message: "Facility updated",
     })
 
   } catch (error) {
