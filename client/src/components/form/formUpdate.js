@@ -323,7 +323,7 @@ class FormUpdate extends Component {
               onChange={(e) => this.handleInputChange(e, "reg_fac_name")}
             />
           </div>
-          <div className="form-group">
+          {/* <div className="form-group">
             <label className="label" htmlFor="fac_type">
               Type of facility <span className="required">*</span>
             </label>
@@ -340,7 +340,7 @@ class FormUpdate extends Component {
               <option value="3">Laboratory</option>
               <option value="4">Imaging/Radiological Center</option>
             </select>
-          </div>
+          </div> */}
           <div className="form-group">
             <label className="label" htmlFor="phone_number">
               Facility phone number
