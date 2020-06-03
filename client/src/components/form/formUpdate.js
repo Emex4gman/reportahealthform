@@ -190,9 +190,9 @@ class FormUpdate extends Component {
         setModelMessage(data.responce.message);
 
         setSucced(data.succed);
-        // setTimeout(() => {
-        //   window.location.reload();
-        // }, 2000);
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       } else {
         setModelMessage(data.responce.message);
         setSucced(data.succed);
