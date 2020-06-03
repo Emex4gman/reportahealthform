@@ -187,7 +187,7 @@ class FormUpdate extends Component {
       closeForm();
       let data = await updateFacilityHandler(this.state, token, facData._id);
       if (data.succed === true) {
-        setModelMessage("Facility was updated successfully");
+        setModelMessage(data.responce.message);
         setSucced(data.succed);
         setTimeout(() => {
           window.location.reload();
