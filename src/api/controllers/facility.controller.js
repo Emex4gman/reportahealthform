@@ -79,11 +79,11 @@ exports.updateFacility = async (req, res, next) => {
       throw error;
     }
     //validate the  user
-    // if (userId !== foundFacility.userId) {
-    //   let error = new Error("You are not authoried to make any changes ")
-    //   error.statusCode = httpStatus.UNAUTHORIZED
-    //   throw error;
-    // }
+    if (userId !== foundFacility.userId) {
+      let error = new Error("You are not authoried to make any changes ")
+      error.statusCode = httpStatus.UNAUTHORIZED
+      throw error;
+    }
     //spread the old file
     await foundFacility.update({ ...body, humanResources });
     await foundFacility.save()
