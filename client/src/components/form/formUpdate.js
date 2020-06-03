@@ -45,11 +45,11 @@ class FormUpdate extends Component {
       fac_type: facData.fac_type,
       ownership: facData.ownership,
       facility_level: facData.facility_level,
-      services: [],
-      specilizations: [],
-      daysOfOperations: [],
+      services: facData.services,
+      specilizations: facData.specilizations,
+      daysOfOperations: facData.daysOfOperations,
+      humanResources: facData.humanResources || {},
       specilizationsList: [],
-      humanResources: facData.humanResources || "{}",
       lgaOptions: [],
       stateOptions: [],
       checkedItems: new Map(),
@@ -76,8 +76,19 @@ class FormUpdate extends Component {
     this.handleLoaction();
     this.loadStateOptions();
     this.loadLgaOptions(this.state.statename);
+    this.loadcheckedItems();
+    this.handleSpecilizationsChange();
   }
 
+  loadcheckedItems() {
+    const { daysOfOperations, services, specilizations } = this.props.facData;
+    let checkedItemsArr = [].concat(daysOfOperations, services, specilizations);
+    checkedItemsArr.forEach((item) => {
+      this.setState((prevState) => ({
+        checkedItems: prevState.checkedItems.set(item, true),
+      }));
+    });
+  }
   loadStateOptions() {
     let stateOptions = [
       <option key="00" value="00">
@@ -202,7 +213,7 @@ class FormUpdate extends Component {
     }
   };
 
-  async handleSpecilizationsChange(prevState) {
+  handleSpecilizationsChange(prevState) {
     // get the state of the  previous list and update the
     //list depening on the content in the services state
     let serviceList = [...this.state.services];
@@ -652,11 +663,13 @@ class FormUpdate extends Component {
             </div>
           </div>
           <HumanResourcesForm
+            initvalue={this.state.humanResources}
             fac_type={this.state.fac_type}
             getVal={(data) => {
-              console.log(data);
+              let newData = { ...this.state.humanResources, ...data };
+              console.log(newData);
               this.setState({
-                humanResources: JSON.stringify(data),
+                humanResources: newData,
               });
             }}
           />

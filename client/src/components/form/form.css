@@ -5,6 +5,7 @@
 .form-container.update {
   width: 100%;
 }
+
 .required {
   color: red;
 }
@@ -24,7 +25,9 @@ input[type="radio"] {
   align-items: stretch;
   margin: auto;
 }
-
+.form > h2 {
+  font-size: 1.7rem;
+}
 .checkbox-container > span {
   height: 7rem;
 }

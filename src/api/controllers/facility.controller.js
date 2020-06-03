@@ -68,7 +68,7 @@ exports.updateFacility = async (req, res, next) => {
   try {
     let body = req.body
     let userId = req.userId
-    let humanResources = body.humanResources ? JSON.parse(body.humanResources) : {}
+    let humanResources = body.humanResources ? body.humanResources : {}
     let _id = mongoose.Types.ObjectId(req.params.id)
 
     // find if the fasility exist, 

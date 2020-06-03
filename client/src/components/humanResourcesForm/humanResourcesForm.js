@@ -4,7 +4,7 @@ import {
   RadiologicalhumanResources,
 } from "../../data/options";
 import "./humanResourcesForm.css";
-const HumanResourcesForm = ({ fac_type = "1", getVal }) => {
+const HumanResourcesForm = ({ fac_type = "1", getVal, initvalue = {} }) => {
   const [formdata, setFormData] = useState({});
 
   const handleForm = (e, key) => {
@@ -29,6 +29,7 @@ const HumanResourcesForm = ({ fac_type = "1", getVal }) => {
                     {hr.label} <span className="required">*</span>
                   </label>
                   <input
+                    defaultValue={initvalue[hr.key]}
                     className="form-control"
                     type="number"
                     name={hr.key}
