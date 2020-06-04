@@ -57,8 +57,9 @@ const HumanResourcesForm = ({ fac_type = "1", getVal, initvalue = {} }) => {
                     {hr.label} <span className="required">*</span>
                   </label>
                   <input
+                    defaultValue={initvalue[hr.key]}
                     className="form-control"
-                    type="text"
+                    type="number"
                     name={hr.key}
                     onChange={(e) => handleForm(e, `${hr.key}`)}
                   />
