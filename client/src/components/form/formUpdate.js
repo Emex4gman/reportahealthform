@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import "./formUpdate.css";
 import { AppContext } from "../../store/store";
 import { lgas, states } from "../../data/states_lgas";
 import services, {
@@ -168,7 +167,7 @@ class FormUpdate extends Component {
     this.setState({ lgaOptions: lgaOptions });
   };
 
-  validateForm() {
+  validateForm(closeForm, setModelMessage, setSucced) {
     let validated = false;
     if (
       this.state.reg_fac_name === "" ||
@@ -176,13 +175,10 @@ class FormUpdate extends Component {
       this.state.lganame === "" ||
       this.state.statename === ""
     ) {
+      closeForm();
+      setModelMessage("Some fields are empty");
+      setSucced(false);
       window.scrollTo(0, 0);
-      // modelControl("open");
-
-      this.setState({
-        modelMessage: "Some fileds are empty",
-        succed: false,
-      });
     } else {
       validated = true;
     }
@@ -190,7 +186,7 @@ class FormUpdate extends Component {
   }
   submit = async () => {
     const { facData, closeForm, setModelMessage, setSucced } = this.props;
-    if (this.validateForm()) {
+    if (this.validateForm(closeForm, setModelMessage, setSucced)) {
       const { token, setIsLoading } = this.context;
       setIsLoading(true);
       setModelMessage("");
