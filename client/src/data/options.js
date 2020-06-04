@@ -74,6 +74,21 @@ export const ownershipList = [
   },
 ];
 
+//select
+export const facilityLevels = [
+  {
+    id: "1",
+    value: "Primary",
+  },
+  {
+    id: "2",
+    value: "Secondary",
+  },
+  {
+    id: "3",
+    value: "Tertiary",
+  },
+];
 // iputes
 export const HospitalhumanResources = [
   {

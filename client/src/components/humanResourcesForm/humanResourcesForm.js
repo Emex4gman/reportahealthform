@@ -9,7 +9,6 @@ const HumanResourcesForm = ({ fac_type = "1", getVal, initvalue = {} }) => {
 
   const handleForm = (e, key) => {
     setFormData({ ...formdata, [key]: e.target.value });
-
     getVal(formdata);
   };
 

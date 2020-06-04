@@ -1,6 +1,9 @@
 .preview-items {
-  display: flex;
-  flex-direction: column;
+  /* display: flex; */
+
+  /* flex-direction: column; */
+  display: grid;
+  grid-template-columns: 50% 50%;
 }
 
 .preview-item {
@@ -10,9 +13,15 @@
   font-weight: bold;
 }
 
-.preview-item:nth-child(2n + 0) {
+/* .preview-item:nth-child(2n + 0) {
   background-color: #c0c0c0;
 }
 .preview-item:nth-child(2n + 1) {
   background-color: #dddddd;
+} */
+
+@media only screen and (max-width: 600px) {
+  .preview-items {
+    grid-template-columns: 100%;
+  }
 }

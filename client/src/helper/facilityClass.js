@@ -1,11 +1,9 @@
 import { lgas, states } from "../data/states_lgas";
-import { fac_types, ownershipList } from "../data/options";
+import { fac_types, ownershipList, facilityLevels } from "../data/options";
 class FacilityClass {
   constructor(obj) {
     this.reg_fac_name = obj.reg_fac_name || "";
-    this.fac_type =
-      fac_types.filter((fac_type) => fac_type.id === obj.fac_type)[0]
-        .fac_type || "";
+    this.fac_type = resolver(fac_types, obj.fac_type) || "";
     this.CouncilRegistrationNumber = obj.CouncilRegistrationNumber;
     this.street_name = obj.street_name || "";
     this.phone_number = obj.phone_number || "";
@@ -20,18 +18,21 @@ class FacilityClass {
       lgas.filter(
         (lga) => lga.state_id === obj.statename && lga.lga_id === obj.lganame
       )[0].lga || "";
-    this.statename =
-      states.filter((state) => state.id === obj.statename)[0].state || "";
-    this.ownership =
-      ownershipList.filter((ownership) => ownership.id === obj.ownership)[0]
-        .value || "";
-    this.facility_level = obj.facility_level || "";
-    this.services = obj.services.toString().replace(RegExp(/,/gi), ", ") || "";
-    this.daysOfOperations =
-      obj.daysOfOperations.toString().replace(RegExp(/,/gi), ", ") || "";
-    this.specilizations =
-      obj.specilizations.toString().replace(RegExp(/,/gi), ", ") || "";
+    this.statename = resolver(states, obj.statename) || "";
+    this.ownership = resolver(ownershipList, obj.ownership) || "";
+    this.facility_level = resolver(facilityLevels, obj.facility_level) || "";
+    this.services = turnArrayToString(obj.services) || "";
+    this.daysOfOperations = turnArrayToString(obj.daysOfOperations) || "";
+    this.specilizations = turnArrayToString(obj.specilizations) || "";
   }
 }
+
+const resolver = (List, id) => {
+  return List.filter((item) => item.id === id)[0].value;
+};
+
+const turnArrayToString = (arr) => {
+  return arr.toString().replace(RegExp(/,/gi), ", ");
+};
 
 export default FacilityClass;

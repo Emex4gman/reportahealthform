@@ -3,7 +3,7 @@ import CustomModel, { modelControl } from "../modeldialog/customModel";
 
 import "./facilityTile.css";
 import FormUpdate from "../form/formUpdate";
-const FacilityTile = ({ facData, onClick, onUpdateCLick }) => {
+const FacilityTile = ({ facData, onClick }) => {
   const [toUpdate, setToUpdate] = useState(false);
   const [modelMessage, setModelMessage] = useState("");
   const [succed, setSucced] = useState("");
@@ -39,7 +39,7 @@ const FacilityTile = ({ facData, onClick, onUpdateCLick }) => {
           type="button"
           className="btn btn-warning"
         >
-          UPDATE
+          Update this facility
         </button>
         {/* <button type="button" className="btn btn-danger">
           DELETE

@@ -663,7 +663,6 @@ class FormUpdate extends Component {
             fac_type={this.state.fac_type}
             getVal={(data) => {
               let newData = { ...this.state.humanResources, ...data };
-              console.log(newData);
               this.setState({
                 humanResources: newData,
               });

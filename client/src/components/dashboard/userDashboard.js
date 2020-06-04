@@ -45,9 +45,9 @@ class UserDashboard extends React.Component {
   selectFacDataHandler(fac) {
     this.setState({ facData: fac });
   }
-  togglePreviewHandler() {
-    this.setState({ isOpen: !this.state.isOpen });
-  }
+  // togglePreviewHandler() {
+  //   this.setState({ isOpen: !this.state.isOpen });
+  // }
   render() {
     const { userData, facilityData } = this.context;
     let component;
@@ -55,18 +55,21 @@ class UserDashboard extends React.Component {
       case true:
         component = (
           <div className="facility-items">
+            <h3>Resgistered Facility</h3>
+            <br />
             {facilityData.map((fac) => (
-              <FacilityTile
-                facData={fac}
-                key={fac._id}
-                onUpdateCLick={() => {
-                  console.log("update");
-                }}
-                onClick={() => {
-                  this.selectFacDataHandler(fac);
-                  this.togglePreviewHandler();
-                }}
-              />
+              <div key={fac._id}>
+                <FacilityTile
+                  facData={fac}
+                  key={fac._id}
+                  onClick={() => {
+                    this.selectFacDataHandler(fac);
+                    // this.togglePreviewHandler();
+                  }}
+                />
+
+                <FacilityPreview facData={fac} />
+              </div>
             ))}
           </div>
         );
@@ -115,7 +118,7 @@ class UserDashboard extends React.Component {
           <div className="user-table">
             {component}
 
-            <div
+            {/* <div
               className={`preview-container ${this.state.isOpen ? "open" : ""}`}
             >
               {this.state.isOpen ? (
@@ -123,7 +126,7 @@ class UserDashboard extends React.Component {
               ) : (
                 <div className="no-preview-item"></div>
               )}
-            </div>
+            </div> */}
           </div>
         )}
       </div>
