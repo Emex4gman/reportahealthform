@@ -72,15 +72,17 @@ class FormUpdate extends Component {
   }
 
   componentDidMount() {
+    this.loadcheckedItems();
     this.handleLoaction();
     this.loadStateOptions();
     this.loadLgaOptions(this.state.statename);
-    this.loadcheckedItems();
     this.handleSpecilizationsChange();
+    console.log(this.state.checkedItems);
   }
 
   loadcheckedItems() {
     const { daysOfOperations, services, specilizations } = this.props.facData;
+    console.log(this.props.facData.services);
     let checkedItemsArr = [].concat(daysOfOperations, services, specilizations);
     checkedItemsArr.forEach((item) => {
       this.setState((prevState) => ({

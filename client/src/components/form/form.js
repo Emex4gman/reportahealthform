@@ -344,7 +344,7 @@ class Form extends Component {
               size={"10"}
               autoComplete="off"
               className="form-control"
-              type="text"
+              type="number"
               name="phone_number"
               id="phone_number"
               onChange={(e) => this.handleInputChange(e, "phone_number")}

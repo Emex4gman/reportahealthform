@@ -30,7 +30,6 @@ exports.getUserFacilities = async (req, res, next) => {
   }
 }
 exports.saveFacility = async (req, res, next) => {
-  const host = req.protocol + "://" + req.headers.host + "/images/"
 
   try {
     let body = req.body
@@ -40,6 +39,10 @@ exports.saveFacility = async (req, res, next) => {
     let humanResources = body.humanResources ? JSON.parse(body.humanResources) : {}
     let cacImageUrl = ""
     let profileImageUrl = ""
+    let services = JSON.parse(body.services)
+    let daysOfOperations = JSON.parse(body.daysOfOperations)
+    let specilizations = JSON.parse(body.specilizations)
+
     for (let index = 0; index < files.length; index++) {
       if (files[index].fieldname === 'profile') {
         profileImageUrl = 'images/' + files[index].filename
@@ -60,7 +63,15 @@ exports.saveFacility = async (req, res, next) => {
       throw error;
     }
     let newFacility = await new Facility({
-      ...body, sig_unique_id, user: id, humanResources, cacImageUrl, profileImageUrl
+      ...body,
+      sig_unique_id,
+      user: id,
+      humanResources,
+      cacImageUrl,
+      profileImageUrl,
+      services,
+      daysOfOperations,
+      specilizations
     });
     await newFacility.save();
     res.status(httpStatus.CREATED).json({
@@ -117,8 +128,6 @@ exports.updateFacilityImages = async (req, res, next) => {
     let files = req.files
     let userId = req.userId
     let _id = mongoose.Types.ObjectId(req.params.facId)
-
-
 
     // find if the fasility exist, 
     let foundFacility = await Facility.findById(_id);

@@ -23,7 +23,7 @@ const FacilityPreview = ({ facData, onClick }) => {
         <span>{facClass.street_name}</span>
       </div>
       <div className="preview-item">
-        <span>Operational Status: </span>
+        <span>Council Registration Number: </span>
         <span>{facClass.CouncilRegistrationNumber} </span>
       </div>
       <div className="preview-item">

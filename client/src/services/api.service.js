@@ -2,14 +2,16 @@ export const registerFacilityHandler = async (body, token) => {
   let responce;
   let succed = false;
   try {
+    body.services = JSON.stringify(body.services);
+    body.daysOfOperations = JSON.stringify(body.daysOfOperations);
+    body.specilizations = JSON.stringify(body.specilizations);
     const data = new FormData();
     Object.keys(body).forEach((key) => {
       data.append(key, body[key]);
     });
-
     let apiresponce = await fetch(
       // "http://fill.reportahealth.org/v1/facility",
-      "https://reportahealthform.herokuapp.com/v1/facility",
+      "https://reportahealthfom.herokuapp.com/v1/facility",
       // "http://localhost:7000/v1/facility",
       {
         method: "POST",

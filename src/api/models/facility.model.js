@@ -32,7 +32,7 @@ const facilitySchema = new Schema({
   operational_hours: {
     type: String,
     required: true,
-    trim: true,
+
     lowercase: true,
   },
   licenseStatus: {
@@ -84,7 +84,6 @@ const facilitySchema = new Schema({
   },
   daysOfOperations: {
     type: Array,
-
   },
   specilizations: {
     type: Array,
@@ -99,9 +98,7 @@ const facilitySchema = new Schema({
     trim: true,
     lowercase: true,
   },
-  images: {
-    type: Array,
-  },
+
   cacImageUrl: {
     type: String,
   },
