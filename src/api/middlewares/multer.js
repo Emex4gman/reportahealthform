@@ -1,15 +1,18 @@
-var cloudinary = require('cloudinary');
-const { cloudinarConfig } = require('../../config/cloudinary');
-const cloudinaryStorage = require('multer-storage-cloudinary');
 const multer = require('multer');
+const path = require('path')
 
 
-const storage = cloudinaryStorage({
-  cloudinary: cloudinary,
-  folder: 'images',
-  allowedFormats: ['jpg', 'png'],
+const destinationPath = path.join(process.cwd(), '/public/images')
+// console.log(destinationPath)
+const serverStore = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, destinationPath)
+  },
+  filename: function (req, file, cb) {
+
+    cb(null, file.fieldname + '_' + req.userId + '.' + file.originalname.split('.')[1])
+  }
 });
-
-const parser = multer({ storage });
+const parser = multer({ storage: serverStore });
 
 exports.parser = parser;

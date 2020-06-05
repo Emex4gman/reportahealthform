@@ -10,7 +10,8 @@ router.route("/").post(authenticate, parser.any(), facilityController.saveFacili
 router.route('/user').get(authenticate, authorize(USER), facilityController.getUserFacilities)
 router.route('/').get(authenticate, authorize(ADMIN), facilityController.getAllFacility)
 router.route('/:id').patch(authenticate, authorize(USER), facilityController.updateFacility)
+router.route('/images/:facId').patch(authenticate, parser.any(), facilityController.updateFacilityImages)
 
 
 
-module.exports = router;
+module.exports = router; 

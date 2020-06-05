@@ -79,6 +79,7 @@ const facilitySchema = new Schema({
   },
   facility_website: {
     type: String,
+    trim: true
 
   },
   daysOfOperations: {
@@ -101,9 +102,16 @@ const facilitySchema = new Schema({
   images: {
     type: Array,
   },
+  cacImageUrl: {
+    type: String,
+  },
+  profileImageUrl: {
+    type: String,
+  },
   average_rating: {
     type: String,
     default: null
+
   },
   user: {
     type: Schema.Types.ObjectId,

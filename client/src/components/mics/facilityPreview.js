@@ -73,11 +73,11 @@ const FacilityPreview = ({ facData, onClick }) => {
       </div>
       <div className="preview-item">
         <span>Profile: </span>
-        <img className="images" src={facClass.images[0].profile} alt="" />
+        <img className="images" src={facClass.cacImageUrl} alt="" />
       </div>
       <div className="preview-item">
         <span>Cac: </span>
-        <img className="images" src={facClass.images[1].cac} alt="" />
+        <img className="images" src={facClass.profileImageUrl} alt="" />
       </div>
     </div>
   );

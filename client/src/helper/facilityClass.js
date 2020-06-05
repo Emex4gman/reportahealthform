@@ -28,6 +28,8 @@ class FacilityClass {
     this.daysOfOperations = convertArrytoString(obj.daysOfOperations) || "";
     this.specilizations = convertArrytoString(obj.specilizations) || "";
     this.images = obj.images;
+    this.cacImageUrl = obj.cacImageUrl;
+    this.profileImageUrl = obj.profileImageUrl;
   }
 }
 

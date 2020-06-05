@@ -4,7 +4,7 @@ const path = require("path");
 require("dotenv-safe").load({
   allowEmptyValues: true,
   path: path.join(__dirname, "../../.env"),
-  sample: path.join(__dirname, "../../.env.example"),
+  // sample: path.join(__dirname, "../../.env.example"),
 });
 
 module.exports = {
@@ -30,11 +30,11 @@ module.exports = {
     refreshToken: process.env.REFRESH_TOKEN,
     accessToken: process.env.ACCESS_TOKEN,
   },
-  cloudinaryConfig: {
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
-  },
+  // cloudinaryConfig: {
+  //   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  //   api_key: process.env.CLOUDINARY_API_KEY,
+  //   api_secret: process.env.CLOUDINARY_API_SECRET,
+  // },
   // adminDetails: {
   //   email: process.env.ADMIN_EMAIL,
   //   password: process.env.ADMIN_PASSWORD,

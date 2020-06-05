@@ -4,6 +4,7 @@ const User = require('../models/user.model')
 const httpStatus = require('http-status')
 const uuid = require('uuid').v4
 
+
 exports.getAllFacility = async (req, res, next) => {
   try {
     let foundFacilities = await Facility.find();
@@ -29,16 +30,23 @@ exports.getUserFacilities = async (req, res, next) => {
   }
 }
 exports.saveFacility = async (req, res, next) => {
+  const host = req.protocol + "://" + req.headers.host + "/images/"
+
   try {
     let body = req.body
     let id = req.userId
     let sig_unique_id = uuid()
     let files = req.files
-    let images = [];
     let humanResources = body.humanResources ? JSON.parse(body.humanResources) : {}
-
+    let cacImageUrl = ""
+    let profileImageUrl = ""
     for (let index = 0; index < files.length; index++) {
-      images.push({ [files[index].fieldname]: files[index].url })
+      if (files[index].fieldname === 'profile') {
+        profileImageUrl = 'images/' + files[index].filename
+      }
+      if (files[index].fieldname === 'cac') {
+        cacImageUrl = 'images/' + files[index].filename
+      }
     }
 
     /**
@@ -51,7 +59,9 @@ exports.saveFacility = async (req, res, next) => {
       error.statusCode = httpStatus.CONFLICT;
       throw error;
     }
-    let newFacility = await new Facility({ ...body, sig_unique_id, user: id, images: images, humanResources });
+    let newFacility = await new Facility({
+      ...body, sig_unique_id, user: id, humanResources, cacImageUrl, profileImageUrl
+    });
     await newFacility.save();
     res.status(httpStatus.CREATED).json({
       messsage: "Facility created",
@@ -99,4 +109,51 @@ exports.updateFacility = async (req, res, next) => {
   }
 
 
+}
+
+exports.updateFacilityImages = async (req, res, next) => {
+  try {
+
+    let files = req.files
+    let userId = req.userId
+    let _id = mongoose.Types.ObjectId(req.params.facId)
+
+
+
+    // find if the fasility exist, 
+    let foundFacility = await Facility.findById(_id);
+    if (!foundFacility) {
+      let error = new Error("No record found")
+      error.statusCode = httpStatus.NOT_FOUND
+      throw error;
+    }
+    //validate the  user
+    if (userId.toString() !== foundFacility.user.toString()) {
+      let error = new Error("You are not authoried to make any changes")
+      error.statusCode = httpStatus.UNAUTHORIZED
+      throw error;
+    }
+    let cacImageUrl = foundFacility.cacImageUrl || "";
+    let profileImageUrl = foundFacility.profileImageUrl
+    for (let index = 0; index < files.length; index++) {
+      if (files[index].fieldname === 'profile') {
+        profileImageUrl = "images/" + files[index].filename
+      }
+      if (files[index].fieldname === 'cac') {
+        cacImageUrl = "images/" + files[index].filename
+      }
+    }
+    //spread the old file
+    await foundFacility.update({
+      cacImageUrl, profileImageUrl
+    });
+    await foundFacility.save()
+
+    // update with the new data
+    res.status(httpStatus.CREATED).json({
+      message: "Facility images updated",
+    })
+  } catch (error) {
+    next(error)
+  }
 }
