@@ -667,6 +667,7 @@ class Form extends Component {
               type="file"
               name="file"
               id="profile"
+              accept="image/x-png,image/gif,image/jpeg"
               onChange={(e) => {
                 const imagedata = e.target.files[0];
                 console.log(e.target.files);
@@ -688,6 +689,7 @@ class Form extends Component {
               type="file"
               name="cac"
               id="cac"
+              accept="image/x-png,image/gif,image/jpeg"
             />
           </div>
 

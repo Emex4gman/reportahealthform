@@ -2,7 +2,6 @@ import React from "react";
 import "./faclityPreview.css";
 import FacilityClass from "../../helper/facilityClass";
 const FacilityPreview = ({ facData, onClick }) => {
-  console.log(facData);
   let facClass = new FacilityClass(facData);
 
   return (
@@ -22,6 +21,10 @@ const FacilityPreview = ({ facData, onClick }) => {
       <div className="preview-item">
         <span>Address: </span>
         <span>{facClass.street_name}</span>
+      </div>
+      <div className="preview-item">
+        <span>Operational Status: </span>
+        <span>{facClass.CouncilRegistrationNumber} </span>
       </div>
       <div className="preview-item">
         <span>Operational Status: </span>
@@ -67,6 +70,14 @@ const FacilityPreview = ({ facData, onClick }) => {
       <div className="preview-item">
         <span>Days of Operations: </span>
         <span>{facClass.daysOfOperations}</span>
+      </div>
+      <div className="preview-item">
+        <span>Profile: </span>
+        <img className="images" src={facClass.images[0].profile} alt="" />
+      </div>
+      <div className="preview-item">
+        <span>Cac: </span>
+        <img className="images" src={facClass.images[1].cac} alt="" />
       </div>
     </div>
   );

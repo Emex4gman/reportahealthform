@@ -8,7 +8,8 @@ export const registerFacilityHandler = async (body, token) => {
     });
 
     let apiresponce = await fetch(
-      "https://reportahealthform.herokuapp.com/v1/facility",
+      "http://fill.reportahealth.org/v1/facility",
+      // "https://reportahealthform.herokuapp.com/v1/facility",
       // "http://localhost:7000/v1/facility",
       {
         method: "POST",
@@ -35,7 +36,8 @@ export const getFacilityHandler = async (token) => {
   let succed = false;
   try {
     let apiresponce = await fetch(
-      "https://reportahealthform.herokuapp.com/v1/facility/user",
+      "http://fill.reportahealth.org/v1/facility/user",
+      // "https://reportahealthform.herokuapp.com/v1/facility/user",
       // " http://localhost:7000/v1/facility/user",
       {
         method: "GET",
@@ -62,7 +64,8 @@ export const updateFacilityHandler = async (body, token, id) => {
   let succed = false;
   try {
     let apiresponce = await fetch(
-      "https://reportahealthform.herokuapp.com/v1/facility/" + id,
+      "http://fill.reportahealth.org/v1/facility/" + id,
+      // "https://reportahealthform.herokuapp.com/v1/facility/" + id,
       // "http://localhost:7000/v1/facility/" + id,
       {
         method: "PATCH",
