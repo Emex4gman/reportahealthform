@@ -11,7 +11,7 @@ export const registerFacilityHandler = async (body, token) => {
     });
     let apiresponce = await fetch(
       // "http://fill.reportahealth.org/v1/facility",
-      "https://reportahealthfom.herokuapp.com/v1/facility",
+      "https://reportahealthform.herokuapp.com/v1/facility",
       // "http://localhost:7000/v1/facility",
       {
         method: "POST",
