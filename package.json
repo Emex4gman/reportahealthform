@@ -6,9 +6,10 @@
   "main": "src/index.js",
   "license": "MIT",
   "scripts": {
-    "live": "npm run client-install && npm run build-client && npm run start",
+    "live": "npm run client-install2 && npm run build-client && npm run start",
     "start": "node ./src/index.js",
-    "client-install": "yarn install --prefix client",
+    "client-install": "npm install --prefix client",
+    "client-install2": "yarn install --prefix client",
     "server": "nodemon ./src/index.js",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "test": "echo \"Error: no test specified\" && exit 1",
