@@ -36,7 +36,7 @@ const Home = (props) => {
     try {
       validateform();
       let responce = await fetch(
-        "http://fill.reportahealth.org/v1/auth/login",
+        "https://fill.reportahealth.org/v1/auth/login",
         // "https://reportahealthform.herokuapp.com/v1/auth/login",
         // "http://localhost:7000/v1/auth/login",
         {
@@ -70,7 +70,7 @@ const Home = (props) => {
       validateform();
       modelControl("open");
       let responce = await fetch(
-        "http://fill.reportahealth.org/v1/auth/register",
+        "https://fill.reportahealth.org/v1/auth/register",
         // "https://reportahealthform.herokuapp.com/v1/auth/register",
         {
           method: "POST",
