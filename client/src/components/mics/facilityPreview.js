@@ -83,7 +83,7 @@ const FacilityPreview = ({ facData, onClick }) => {
         <span>Cac: </span>
         <img
           className="images"
-          src={"/v1/imgaes/" + facClass.profileImageUrl}
+          src={"/v1/images/" + facClass.profileImageUrl}
           alt=""
         />
       </div>
