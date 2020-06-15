@@ -42,13 +42,12 @@ exports.saveFacility = async (req, res, next) => {
     let services = JSON.parse(body.services)
     let daysOfOperations = JSON.parse(body.daysOfOperations)
     let specilizations = JSON.parse(body.specilizations)
-
     for (let index = 0; index < files.length; index++) {
       if (files[index].fieldname === 'profile') {
         profileImageUrl = files[index].filename
       }
       if (files[index].fieldname === 'cac') {
-        cacImageUrl = + files[index].filename
+        cacImageUrl = files[index].filename
       }
     }
 
