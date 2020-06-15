@@ -3,7 +3,7 @@ import "./customModel.css";
 /**
  * action can either be  'open' or 'close'
  */
-export const modelControl = (action) => {
+export const modelControl = (action, cb = () => {}) => {
   switch (action) {
     case "open":
       document.querySelector("body").style.overflow = "hidden";
@@ -16,6 +16,7 @@ export const modelControl = (action) => {
           .querySelector(".model-content-container")
           .classList.add("open");
       }, 0.1);
+      cb();
       break;
     case "close":
       document.querySelector("body").style.removeProperty("overflow");
@@ -26,13 +27,20 @@ export const modelControl = (action) => {
       document
         .querySelector(".model-content-container")
         .classList.remove("open");
+      cb();
       break;
     default:
       break;
   }
 };
 
-const CustomModel = ({ message, succed, htmlElement }) => {
+const CustomModel = ({
+  message,
+  succed,
+  htmlElement,
+  modelHasQuestion = false,
+  questionResult = () => {},
+}) => {
   let loaderIcon;
   switch (succed) {
     case true:
@@ -40,6 +48,9 @@ const CustomModel = ({ message, succed, htmlElement }) => {
       break;
     case false:
       loaderIcon = <div className="loader-image-fail"></div>;
+      break;
+    case "info":
+      loaderIcon = <div className="loader-image-info"></div>;
       break;
     default:
       loaderIcon = <div className="loader-image"></div>;
@@ -64,13 +75,28 @@ const CustomModel = ({ message, succed, htmlElement }) => {
             )}
 
             <div className="model-content-footer">
+              {modelHasQuestion === true ? (
+                <button
+                  className="btn btn-success"
+                  onClick={() => {
+                    questionResult(true);
+                    modelControl("close");
+                  }}
+                >
+                  Yes
+                </button>
+              ) : (
+                ""
+              )}
+
               <button
                 className="btn btn-danger"
                 onClick={() => {
+                  questionResult(false);
                   modelControl("close");
                 }}
               >
-                close
+                Close
               </button>
             </div>
           </div>

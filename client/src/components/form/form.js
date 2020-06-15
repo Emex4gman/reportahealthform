@@ -25,6 +25,8 @@ class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      modelHasQuestion: false,
+      questionResult: false,
       CouncilRegistrationNumber: "",
       succed: "",
       licenseStatus: "Unknown",
@@ -43,8 +45,8 @@ class Form extends Component {
       street_name: "",
       lganame: "",
       statename: "",
-      latitude: "",
-      longitude: "",
+      latitude: 0,
+      longitude: 0,
       fac_type: "1",
       ownership: "1",
       facility_level: "1",
@@ -76,8 +78,7 @@ class Form extends Component {
   }
 
   componentDidMount() {
-    this.handleLoaction();
-    // const {  token } = this.context;
+    this.askUserForLoactionHandler();
     let stateOptions = [
       <option key="00" value="00">
         select state
@@ -111,19 +112,29 @@ class Form extends Component {
     this.setState({ [key]: e.target.value });
   }
 
-  handleLoaction = async () => {
-    await navigator.geolocation.getCurrentPosition(
-      (position) =>
-        this.setState({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        }),
-      (err) =>
-        this.setState({
-          latitude: 0,
-          longitude: 0,
-        })
-    );
+  askUserForLoactionHandler = () => {
+    this.setState({
+      modelHasQuestion: true,
+      succed: "info",
+      modelMessage: `Are you currently at the facility location? Please grant Reporta Health access so it can get the current location. `,
+    });
+    modelControl("open");
+  };
+  handleLoaction = async (isAtloaction) => {
+    if (isAtloaction === true) {
+      await navigator.geolocation.getCurrentPosition(
+        (position) =>
+          this.setState({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          }),
+        (err) =>
+          this.setState({
+            latitude: 0,
+            longitude: 0,
+          })
+      );
+    }
   };
 
   handleInputChange = (e, key) => {
@@ -155,29 +166,45 @@ class Form extends Component {
   };
   validateForm() {
     let validated = false;
+    this.setState({
+      modelHasQuestion: false,
+      succed: false,
+    });
+
+    const {
+      reg_fac_name,
+      street_name,
+      lganame,
+      statename,
+      // profile,
+      // cac,
+    } = this.state;
+    modelControl("open");
     if (
-      this.state.reg_fac_name === "" ||
-      this.state.street_name === "" ||
-      this.state.lganame === "" ||
-      this.state.statename === ""
+      reg_fac_name === "" ||
+      street_name === "" ||
+      lganame === "" ||
+      statename === ""
     ) {
       window.scrollTo(0, 0);
-      modelControl("open");
-
       this.setState({
         modelMessage: "Some fileds are empty",
-        succed: false,
       });
-    } else {
+    }
+    // else if (profile === File || cac === File) {
+    //   this.setState({
+    //     modelMessage: "Add the required images",
+    //   });
+    // }
+    else {
       validated = true;
     }
     return validated;
   }
   submit = async () => {
-    if (this.validateForm()) {
+    if (this.validateForm() === true) {
       const { token, setIsLoading } = this.context;
       setIsLoading(true);
-      modelControl("open");
       this.setState({
         modelMessage: "",
         succed: "",
@@ -282,12 +309,18 @@ class Form extends Component {
         switchService = [];
         break;
     }
+
     return (
       <div className="form-container " id="reg-form">
         <CustomModel
           message={this.state.modelMessage}
           succed={this.state.succed}
+          modelHasQuestion={this.state.modelHasQuestion}
+          questionResult={(isAtloaction) => {
+            this.handleLoaction(isAtloaction);
+          }}
         />
+
         <form
           className="form "
           autoComplete="off"

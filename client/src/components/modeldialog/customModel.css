@@ -81,6 +81,15 @@
   background-repeat: no-repeat;
   background-size: contain;
 }
+.loader-image-info {
+  height: 50px;
+  width: 50px;
+  margin: auto;
+  background-image: url(../../common/images/info.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
 .model-content-body {
   /* min-height: 4rem; */
   text-align: center;
@@ -90,10 +99,13 @@
   width: 100%;
   display: flex;
   margin: auto;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 
 .model-content-footer > button {
+  width: 25%;
+}
+.model-content-footer > .btn.btn-danger {
   background-color: var(--border-color);
   border-color: var(--border-color);
 }
