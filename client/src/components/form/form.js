@@ -282,7 +282,6 @@ class Form extends Component {
         switchService = [];
         break;
     }
-    // console.log(this.state.humanResources);
     return (
       <div className="form-container " id="reg-form">
         <CustomModel
@@ -636,7 +635,6 @@ class Form extends Component {
           <HumanResourcesForm
             fac_type={this.state.fac_type}
             getVal={(data) => {
-              console.log(data);
               this.setState({
                 humanResources: JSON.stringify(data),
               });
@@ -670,7 +668,6 @@ class Form extends Component {
               accept="image/x-png,image/gif,image/jpeg"
               onChange={(e) => {
                 const imagedata = e.target.files[0];
-                console.log(e.target.files);
                 this.setState({ profile: imagedata });
               }}
             />
@@ -682,7 +679,6 @@ class Form extends Component {
             <input
               onChange={(e) => {
                 const imagedata = e.target.files[0];
-                console.log(e.target.files);
                 this.setState({ cac: imagedata });
               }}
               className="form-control"

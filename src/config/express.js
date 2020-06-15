@@ -24,7 +24,7 @@ app.get('/', function (req, res) {
 });
 
 //serve public folder
-app.use(express.static(path.join(__dirname.split('src')[0], 'public')));
+app.use('/v1/images/', express.static(path.join(__dirname.split('src')[0], 'public/images')));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

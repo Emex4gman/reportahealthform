@@ -45,10 +45,10 @@ exports.saveFacility = async (req, res, next) => {
 
     for (let index = 0; index < files.length; index++) {
       if (files[index].fieldname === 'profile') {
-        profileImageUrl = 'images/' + files[index].filename
+        profileImageUrl = files[index].filename
       }
       if (files[index].fieldname === 'cac') {
-        cacImageUrl = 'images/' + files[index].filename
+        cacImageUrl = + files[index].filename
       }
     }
 
@@ -146,10 +146,10 @@ exports.updateFacilityImages = async (req, res, next) => {
     let profileImageUrl = foundFacility.profileImageUrl
     for (let index = 0; index < files.length; index++) {
       if (files[index].fieldname === 'profile') {
-        profileImageUrl = "images/" + files[index].filename
+        profileImageUrl = files[index].filename
       }
       if (files[index].fieldname === 'cac') {
-        cacImageUrl = "images/" + files[index].filename
+        cacImageUrl = files[index].filename
       }
     }
     //spread the old file
