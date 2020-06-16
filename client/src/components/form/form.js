@@ -56,8 +56,8 @@ class Form extends Component {
       modelMessage: "",
       specilizationsList: [],
       humanResources: "{}",
-      profile: {},
-      cac: {},
+      profile: "",
+      cac: "",
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleLoaction = this.handleLoaction.bind(this);
@@ -176,27 +176,36 @@ class Form extends Component {
       street_name,
       lganame,
       statename,
-      // profile,
-      // cac,
+      profile,
+      cac,
     } = this.state;
     modelControl("open");
-    if (
-      reg_fac_name === "" ||
-      street_name === "" ||
-      lganame === "" ||
-      statename === ""
-    ) {
+    console.log(typeof profile);
+    if (reg_fac_name === "") {
       window.scrollTo(0, 0);
       this.setState({
-        modelMessage: "Some fileds are empty",
+        modelMessage: "Facility name is empty",
       });
-    }
-    // else if (profile === File || cac === File) {
-    //   this.setState({
-    //     modelMessage: "Add the required images",
-    //   });
-    // }
-    else {
+    } else if (statename === "") {
+      window.scrollTo(0, 0);
+      this.setState({
+        modelMessage: "Select a state",
+      });
+    } else if (lganame === "") {
+      window.scrollTo(0, 0);
+      this.setState({
+        modelMessage: "Select a local government",
+      });
+    } else if (street_name === "") {
+      window.scrollTo(0, 0);
+      this.setState({
+        modelMessage: "Address of facility is missing",
+      });
+    } else if (profile === "" || cac === "") {
+      this.setState({
+        modelMessage: "Add the required images",
+      });
+    } else {
       validated = true;
     }
     return validated;
@@ -712,6 +721,7 @@ class Form extends Component {
             <input
               onChange={(e) => {
                 const imagedata = e.target.files[0];
+
                 this.setState({ cac: imagedata });
               }}
               className="form-control"
