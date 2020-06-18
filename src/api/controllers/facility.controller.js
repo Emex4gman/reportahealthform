@@ -41,9 +41,9 @@ exports.saveFacility = async (req, res, next) => {
     let humanResources = body.humanResources ? JSON.parse(body.humanResources) : {}
     let cacImageUrl = ""
     let profileImageUrl = ""
-    let services = JSON.parse(body.services)
-    let daysOfOperations = JSON.parse(body.daysOfOperations)
-    let specilizations = JSON.parse(body.specilizations)
+    let services = !body.services ? [] : JSON.parse(body.services)
+    let daysOfOperations = !body.daysOfOperations ? [] : JSON.parse(body.daysOfOperations)
+    let specilizations = !body.specilizations ? [] : JSON.parse(body.specilizations)
     for (let index = 0; index < files.length; index++) {
       if (files[index].fieldname === 'profile') {
         profileImageUrl = files[index].filename
@@ -84,7 +84,6 @@ exports.saveFacility = async (req, res, next) => {
   } catch (error) {
     console.log(error)
     next(error)
-
   }
 }
 
@@ -92,6 +91,7 @@ exports.updateFacility = async (req, res, next) => {
   try {
     let body = req.body
     let userId = req.userId
+    let email = req.email
     let humanResources = body.humanResources ? body.humanResources : {}
     let _id = mongoose.Types.ObjectId(req.params.id)
 
@@ -112,7 +112,7 @@ exports.updateFacility = async (req, res, next) => {
     //spread the old file
     await foundFacility.update({ ...body, humanResources });
     await foundFacility.save()
-
+    appMailer.sendUpdateFacilityEmail(foundFacility, email)
     // update with the new data
     res.status(httpStatus.CREATED).json({
       message: "Facility updated",

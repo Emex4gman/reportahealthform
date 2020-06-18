@@ -52,6 +52,33 @@ exports.sendWelcomeEmail = async (user) => {
     .catch((err) => logger.info("error sending welcome message email", err));
 };
 
+exports.sendUpdateFacilityEmail = async (facility, userEmail) => {
+  const email = new Email({
+    views: {
+      root: tamplateRoot
+    },
+    message: {
+      from: '"Reporta Health" <support@reportahealth.com>',
+    },
+    // uncomment below to send emails in development/test env:
+    send: true,
+    transport: transporter,
+  });
+
+  email
+    .send({
+      template: "updateFacility",
+      message: {
+        to: `${facility.fac_email}, ${userEmail}`,
+      },
+      locals: {
+        productName: "Reporta Health",
+        facilityName: facility.reg_fac_name,
+      },
+    })
+    .catch((err) => logger.info("error sending update facility email", err));
+};
+
 exports.sendNewFacilityEmail = async (facility, userEmail) => {
   const email = new Email({
     views: {
@@ -67,9 +94,9 @@ exports.sendNewFacilityEmail = async (facility, userEmail) => {
 
   email
     .send({
-      template: "newFacility",
+      template: "newFacilty",
       message: {
-        to: `${Facility.fac_email}, ${userEmail}`,
+        to: `${facility.fac_email}, ${userEmail}`,
       },
       locals: {
         productName: "Reporta Health",

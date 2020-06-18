@@ -7,7 +7,6 @@ const userSchema = new Schema({
     type: String,
     required: true,
     match: /^\S+@\S+\.\S+$/,
-    unique: true,
     trim: true,
     lowercase: true,
   },
