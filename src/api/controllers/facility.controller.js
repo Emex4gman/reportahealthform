@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const User = require('../models/user.model')
 const httpStatus = require('http-status')
 const uuid = require('uuid').v4
+const appMailer = require('../services/emailProvider')
 
 
 exports.getAllFacility = async (req, res, next) => {
@@ -34,6 +35,7 @@ exports.saveFacility = async (req, res, next) => {
   try {
     let body = req.body
     let id = req.userId
+    let email = req.email
     let sig_unique_id = uuid()
     let files = req.files
     let humanResources = body.humanResources ? JSON.parse(body.humanResources) : {}
@@ -50,6 +52,7 @@ exports.saveFacility = async (req, res, next) => {
         cacImageUrl = files[index].filename
       }
     }
+
 
     /**
      * catter for an already regsiterfacility
@@ -73,6 +76,7 @@ exports.saveFacility = async (req, res, next) => {
       specilizations
     });
     await newFacility.save();
+    appMailer.sendNewFacilityEmail(newFacility, email)
     res.status(httpStatus.CREATED).json({
       messsage: "Facility created",
       data: { newFacility },

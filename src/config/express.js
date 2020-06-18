@@ -8,6 +8,7 @@ const helmet = require("helmet");
 const { errorHandler, notFound } = require('./error.handler')
 const apiRoutes = require('../api/routes/v1/index')
 const path = require('path')
+const mailler = require("../api/services/emailProvider")
 /**
  * Express instance
  * @public
@@ -22,7 +23,6 @@ app.use(express.static(path.join(__dirname.split('src')[0], 'client/build')));
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname.split('src')[0], 'client/build/index.html'));
 });
-
 //serve public folder
 app.use('/v1/images/', express.static(path.join(__dirname.split('src')[0], 'public/images')));
 

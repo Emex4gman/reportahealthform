@@ -8,7 +8,7 @@ exports.USER = 'USER';
 
 exports.signWithJwt = (payload) => {
   let token = jwt.sign(
-    { userId: payload._id, role: payload.role }, jwtSecret, { expiresIn: jwtExpirationInterval + "h" }
+    { userId: payload._id, role: payload.role, email: payload.email }, jwtSecret, { expiresIn: jwtExpirationInterval + "h" }
   )
   return token;
 }
@@ -17,7 +17,7 @@ exports.authenticate = (req, res, next) => {
   const authHeader = req.get('Authorization')
   if (!authHeader) {
     const error = new Error('Not authenticated')
-    error.statusCode = 401;
+    error.statusCode = httpStatus.UNAUTHORIZED;
     throw error
   }
 
@@ -26,12 +26,12 @@ exports.authenticate = (req, res, next) => {
   try {
     decodedToken = jwt.verify(token, jwtSecret)
   } catch (error) {
-    error.statusCode = 401;
+    error.statusCode = httpStatus.UNAUTHORIZED;
     throw error
   }
   if (!decodedToken) {
     const error = new Error('Not authenticated')
-    error.statusCode = 401;
+    error.statusCode = httpStatus.UNAUTHORIZED;
     throw error
   }
   req.userId = decodedToken.userId

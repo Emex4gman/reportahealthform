@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs");
 const User = require("../models/user.model");
 const { signWithJwt } = require('../middlewares/jwtmiddleware');
 const httpStatus = require('http-status');
-
+const appMailer = require('../services/emailProvider')
 exports.register = async (req, res, next) => {
   try {
     const { email, password } = req.body
@@ -21,6 +21,7 @@ exports.register = async (req, res, next) => {
     }).save()
 
     let token = await signWithJwt(newUser)
+    appMailer.sendWelcomeEmail(newUser)
     res.status(httpStatus.CREATED).json({
       messsage: "Account created",
       data: {

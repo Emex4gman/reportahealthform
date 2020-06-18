@@ -7,14 +7,14 @@ const facilitySchema = new Schema({
     type: String,
     required: true,
     trim: true,
-    lowercase: true,
+
 
   },
   fac_type: {
     type: String,
     required: true,
     trim: true,
-    lowercase: true,
+
   },
   sig_unique_id: {
     type: String,
@@ -24,7 +24,7 @@ const facilitySchema = new Schema({
     type: String,
     required: true,
     trim: true,
-    lowercase: true,
+
   },
   phone_number: {
     type: Number,
@@ -33,7 +33,7 @@ const facilitySchema = new Schema({
     type: String,
     required: true,
 
-    lowercase: true,
+
   },
   licenseStatus: {
     type: String,
@@ -63,7 +63,7 @@ const facilitySchema = new Schema({
     type: String,
     required: true,
     trim: true,
-    lowercase: true,
+
   },
   ownership: {
     type: String,
