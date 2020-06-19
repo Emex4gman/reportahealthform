@@ -48,7 +48,7 @@ const Header = () => {
           </a>
           <ul className="navlist">
             <li className="nav-item">
-              <a href="/" className="nav-link">
+              <a href="https://reportahealth.org" className="nav-link">
                 Home
               </a>
             </li>
